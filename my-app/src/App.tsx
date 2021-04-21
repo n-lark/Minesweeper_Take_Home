@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {GameStart} from "./GameStart"
 import {Game} from "./Game"
 import {GameEnd} from "./GameEnd"
+import {NotFoundError} from "./NotFoundError"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route exact path="/GameEnd" component={GameEnd}>
           <GameEnd />
       </Route>
+      <Route render={() => <NotFoundError />} />
     </Switch>
    </BrowserRouter>
   );
