@@ -1,18 +1,17 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React from "react"; 
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-export const GameStart: React.FC = () => {
+export const NotFoundError: React.FC = () => {
   return (
     <StyledWrapper>
-      <StyledHeading>Minesweeper</StyledHeading>
-      <StyledLink to="./Game">
-        <StyledButton>Play Game</StyledButton>
+      <StyledDiv>Oops! Something weird happened.</StyledDiv>
+      <StyledLink to="./">
+        <StyledButton>Restart Game</StyledButton>
       </StyledLink>
     </StyledWrapper>
   )
 }
-
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -26,11 +25,9 @@ const StyledWrapper = styled.div`
   font-family: 'Work Sans', sans-serif;
 `; 
 
-const StyledHeading = styled.h1`
-  font-size: 42px; 
-  font-weight: normal; 
-  margin-top: 50px; 
-  color: gray; 
+const StyledDiv = styled.div`
+  font-size: 24px; 
+  margin-top: 100px; 
   `
 
 const StyledButton = styled.button`
