@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
+import {Grid} from "./Grid"
 
 
 export const Game: React.FC = () => {
   return (
     <StyledWrapper>
-    <StyledDiv>This is the main game</StyledDiv>
+      <Grid />
     </StyledWrapper>
   )
 }
@@ -21,6 +22,3 @@ const StyledWrapper = styled.div`
   height: 500px; 
 `; 
 
-const StyledDiv = styled.div`
-  
-  `
