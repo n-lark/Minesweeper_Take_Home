@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -10,36 +10,36 @@ export const NotFoundError: React.FC = () => {
         <StyledButton>Restart Game</StyledButton>
       </StyledLink>
     </StyledWrapper>
-  )
-}
+  );
+};
 
 const StyledWrapper = styled.div`
   display: flex;
-  align-items: center; 
-  flex-flow: column; 
+  align-items: center;
+  flex-flow: column;
   border: 1px solid lightgray;
-  box-shadow: 10px 5px 5px lightgray; 
-  margin: 10px; 
-  width: 700px; 
-  height: 500px; 
-  font-family: 'Work Sans', sans-serif;
-`; 
+  box-shadow: 10px 5px 5px lightgray;
+  margin: 10px;
+  width: 700px;
+  height: 500px;
+  font-family: "Work Sans", sans-serif;
+`;
 
 const StyledDiv = styled.div`
-  font-size: 24px; 
-  margin-top: 100px; 
-  `
+  font-size: 24px;
+  margin-top: 100px;
+`;
 
 const StyledButton = styled.button`
   color: gray;
   font-size: 20px;
   padding: 10px 16px;
   border: 1px solid gray;
-  background-color: white; 
+  background-color: white;
   border-radius: 8px;
   outline: none;
-  font-family: 'Work Sans', sans-serif;
-`
+  font-family: "Work Sans", sans-serif;
+`;
 
 const StyledLink = styled(Link)`
   margin: auto;
