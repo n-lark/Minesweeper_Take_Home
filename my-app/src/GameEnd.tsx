@@ -1,11 +1,17 @@
 import React from "react"
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useAppSelector } from './app/hooks'
+import {formatTime} from "./utility/formatTime"
 
 
 export const GameEnd: React.FC = () => {
+  const time = useAppSelector(state => state.timer.value)
+
+
   return (
     <StyledWrapper>
+    <StyledDiv>Your total time was: {formatTime(time)}</StyledDiv>
     <StyledLink to="./">
       <StyledButton>Play Again</StyledButton>
     </StyledLink>
@@ -41,3 +47,8 @@ const StyledLink = styled(Link)`
   margin: auto;
   border-radius: 10px;
 `;
+
+const StyledDiv = styled.div`
+  color: grey; 
+  margin-top: 50px; 
+  `
