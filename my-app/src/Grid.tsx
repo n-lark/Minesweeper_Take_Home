@@ -16,7 +16,7 @@ export const Grid: React.FC = () => {
     <StyledWrapper>
       <StyledGrid>
         {test.map((square, index) => { return (
-          <StyledDiv key={index}>{square.blank && square.blank.toString()}</StyledDiv>
+          <StyledDiv key={index} onClick={null}>{square.blank && square.blank.toString()}</StyledDiv>
         )})}
       </StyledGrid>
     </StyledWrapper>
@@ -40,9 +40,7 @@ const StyledDiv = styled.div`
 `;
 
 const StyledWrapper = styled.div`
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
+  margin: auto; 
   `
 
 // the grid will render the appropriate amount of squares, squares should have props to indicate the color(or image) for styled comps,
