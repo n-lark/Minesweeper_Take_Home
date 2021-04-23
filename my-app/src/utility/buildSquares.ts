@@ -23,3 +23,5 @@ export const buildSquares = (numOfSquares: number) => {
   const shuffledArray = shuffleMineLocations(squaresArray);
   return shuffledArray;
 };
+
+// note for future me, the mine locations will need to be moved in time, the first click is guaranteed to not be a mine, so mines should be distributed after first onclick.
