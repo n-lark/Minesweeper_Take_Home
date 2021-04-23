@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useAppDispatch } from "../src/app/hooks";
+import { useAppDispatch } from "./app/hooks";
 import { resetTimer } from "./features/timerSlice";
 import { resetSquares } from "./features/squaresSlice";
 
