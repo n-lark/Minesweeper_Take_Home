@@ -1,10 +1,15 @@
 //Fisher-Yates (aka Knuth) Shuffle.
 
+type mineState = {
+  show: boolean;
+  isMine: boolean;
+};
+
 type squareState = {
   blank: boolean;
   flag: boolean;
   number: boolean;
-  mine: boolean;
+  mine: mineState;
 };
 
 export const shuffleMineLocations = (array: squareState[]) => {
