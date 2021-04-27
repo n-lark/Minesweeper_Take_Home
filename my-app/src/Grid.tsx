@@ -5,7 +5,7 @@ import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../src/app/hooks";
 import { distributeMines } from "./features/squaresSlice";
 import { useAppDispatch } from "./app/hooks";
-import { generateMines } from "./utility/generateMines";
+import { exposeMines } from "./features/squaresSlice";
 // import { Square } from "./Square";
 
 export const Grid: React.FC = () => {
@@ -15,10 +15,18 @@ export const Grid: React.FC = () => {
 
   const initialClick = () => {
     if (stage === 0) {
-      dispatch(distributeMines(squares));
+      dispatch(distributeMines());
       setStage(1);
     }
-    return null;
+  };
+
+  const secondaryClick = (id: number) => {
+    squares.filter((square) => {
+      if (square.mine.isMine === true && id === square.id) {
+        console.log("BOOM");
+        dispatch(exposeMines());
+      }
+    });
   };
 
   return (
@@ -26,8 +34,14 @@ export const Grid: React.FC = () => {
       <StyledGrid>
         {squares.map((square, index) => {
           return (
-            <StyledDiv key={index} onClick={initialClick}>
-              {square.mine && <FontAwesomeIcon icon={faBomb} />}
+            <StyledDiv
+              key={index}
+              onClick={() => {
+                initialClick();
+                secondaryClick(square.id);
+              }}
+            >
+              {square.mine.show && <FontAwesomeIcon icon={faBomb} />}
               {square.flag && <FontAwesomeIcon icon={faFlag} />}
               {square.number && null}
             </StyledDiv>
