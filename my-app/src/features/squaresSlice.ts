@@ -1,9 +1,6 @@
-import {
-  createImmutableStateInvariantMiddleware,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../app/store";
-import { buildSquares } from "../utility/buildSquares";
+import { shuffleMineLocations } from "../utility/shuffleMineLocations";
 
 type squareState = {
   blank: boolean;
@@ -25,16 +22,39 @@ export const squaresSlice = createSlice({
   initialState,
   reducers: {
     generateSquares: (state, action) => {
-      const squares = buildSquares(action.payload);
-      state.value.push(...squares);
+      let squaresArray = [];
+      for (let i = 0; i < action.payload; i++) {
+        squaresArray.push({
+          blank: false,
+          flag: false,
+          number: false,
+          mine: false,
+        });
+      }
+      state.value.push(...squaresArray);
     },
-    flagSquare: (state, action) => {
-      // state.value.map((square, index) => {
-      //   if (index === action.payload) {
-      //     return (square.flag = true);
-      //   }
-      //   return square;
-      // });
+    distributeMines: (state, action) => {
+      let squaresArray = [];
+      for (let i = 0; i < action.payload.length; i++) {
+        if (i < Math.floor(action.payload.length * 0.2)) {
+          squaresArray.push({
+            blank: false,
+            flag: false,
+            number: false,
+            mine: true,
+          });
+        }
+        if (i >= Math.floor(action.payload.length * 0.2)) {
+          squaresArray.push({
+            blank: false,
+            flag: false,
+            number: false,
+            mine: false,
+          });
+        }
+      }
+      const shuffledArray = shuffleMineLocations(squaresArray);
+      state.value = shuffledArray;
     },
     resetSquares: (state) => {
       state.value = [];
@@ -45,7 +65,7 @@ export const squaresSlice = createSlice({
 export const {
   generateSquares,
   resetSquares,
-  flagSquare,
+  distributeMines,
 } = squaresSlice.actions;
 
 export const selectSquares = (state: RootState) => state.squares.value;

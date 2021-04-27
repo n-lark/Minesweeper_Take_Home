@@ -11,7 +11,7 @@ export const GameStart: React.FC = () => {
   useEffect(() => {
     dispatch(resetTimer());
     dispatch(resetSquares());
-  });
+  }, [dispatch]);
 
   return (
     <StyledWrapper>

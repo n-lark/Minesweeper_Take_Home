@@ -1,27 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../src/app/hooks";
-import { flagSquare } from "./features/squaresSlice";
+import { distributeMines } from "./features/squaresSlice";
 import { useAppDispatch } from "./app/hooks";
-
-type squareState = {
-  blank: boolean;
-  flag: boolean;
-  number: boolean;
-  mine: boolean;
-};
+import { generateMines } from "./utility/generateMines";
+// import { Square } from "./Square";
 
 export const Grid: React.FC = () => {
+  const [stage, setStage] = useState<number>(0);
   const squares = useAppSelector((state) => state.squares.value);
   const dispatch = useAppDispatch();
 
-  const reveal = (square: squareState, index: number) => {
-    console.log(square, index);
-    // Idea to have null returned depending on what square already is, disable onclick if already a number or whatever
-    // need to update squares in state when clicked... hmm new dispatch action??
-    dispatch(flagSquare(index));
+  const initialClick = () => {
+    if (stage === 0) {
+      dispatch(distributeMines(squares));
+      setStage(1);
+    }
+    return null;
   };
 
   return (
@@ -29,9 +26,9 @@ export const Grid: React.FC = () => {
       <StyledGrid>
         {squares.map((square, index) => {
           return (
-            <StyledDiv key={index} onClick={() => reveal(square, index)}>
+            <StyledDiv key={index} onClick={initialClick}>
               {square.mine && <FontAwesomeIcon icon={faBomb} />}
-              {square.flag && faFlag}
+              {square.flag && <FontAwesomeIcon icon={faFlag} />}
               {square.number && null}
             </StyledDiv>
           );
