@@ -21,12 +21,17 @@ export const Grid: React.FC = () => {
   };
 
   const secondaryClick = (id: number) => {
-    squares.filter((square) => {
-      if (square.mine.isMine === true && id === square.id) {
-        console.log("BOOM");
-        dispatch(exposeMines());
+    if (stage > 0) {
+      for (let i = 0; i < squares.length; i++) {
+        if (squares[i].mine.isMine && id === squares[i].id) {
+          console.log("BOOM");
+          return dispatch(exposeMines());
+        }
+        if (!squares[i].mine.isMine) {
+          console.log("omg wtf");
+        }
       }
-    });
+    }
   };
 
   return (
@@ -54,7 +59,7 @@ export const Grid: React.FC = () => {
 
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(10, minmax(0, 30px));
+  grid-template-columns: repeat(5, minmax(0, 30px));
   border: 0.5px solid lightgray;
   > div {
     height: 30px;
