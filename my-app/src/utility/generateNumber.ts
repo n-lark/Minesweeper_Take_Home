@@ -4,8 +4,9 @@ type mineState = {
 };
 
 type squareState = {
+  blank: boolean;
   flag: boolean;
-  numOrBlank: boolean;
+  number: boolean;
   mine: mineState;
 };
 
@@ -14,14 +15,10 @@ export const generateNumber = (index: number, squares: squareState[]) => {
   let rowLength = 4;
 
   if (index !== squares.length - 1 && squares[index + 1].mine.isMine === true) {
-    console.log("index again", index);
-    console.log("bomb", squares[index + 1]);
     totalNum++;
   }
 
   if (index !== 0 && squares[index - 1].mine.isMine === true) {
-    console.log("index again", index);
-    console.log("bomb", squares[index - 1]);
     totalNum++;
   }
 
@@ -30,8 +27,6 @@ export const generateNumber = (index: number, squares: squareState[]) => {
     squares[index + rowLength] !== undefined &&
     squares[index + rowLength].mine.isMine === true
   ) {
-    console.log("index again", index);
-    console.log("bomb", squares[index + 1]);
     totalNum++;
   }
 
@@ -40,8 +35,6 @@ export const generateNumber = (index: number, squares: squareState[]) => {
     squares[index - rowLength] !== undefined &&
     squares[index - rowLength].mine.isMine === true
   ) {
-    console.log("index again", index);
-    console.log("bomb", squares[index - 1]);
     totalNum++;
   }
 

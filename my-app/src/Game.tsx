@@ -10,15 +10,15 @@ import { Timer } from "./Timer";
 export const Game: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const gameTimer = setInterval(() => {
-      dispatch(startTimer());
-    }, 1000);
+  // useEffect(() => {
+  //   const gameTimer = setInterval(() => {
+  //     dispatch(startTimer());
+  //   }, 1000);
 
-    return () => {
-      clearInterval(gameTimer);
-    };
-  }, [dispatch]);
+  //   return () => {
+  //     clearInterval(gameTimer);
+  //   };
+  // }, [dispatch]);
 
   useEffect(() => {
     dispatch(generateSquares(16));

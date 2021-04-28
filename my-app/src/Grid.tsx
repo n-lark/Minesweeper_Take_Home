@@ -6,7 +6,7 @@ import { useAppSelector } from "../src/app/hooks";
 import { distributeMines } from "./features/squaresSlice";
 import { useAppDispatch } from "./app/hooks";
 import { exposeMines } from "./features/squaresSlice";
-import { determineSquare } from "./features/squaresSlice";
+import { determineSquare, markBlank } from "./features/squaresSlice";
 import { generateNumber } from "./utility/generateNumber";
 // import { Square } from "./Square";
 
@@ -23,6 +23,9 @@ export const Grid: React.FC = () => {
     if (stage > 0) {
       if (squares[index].mine.isMine === true) {
         return dispatch(exposeMines());
+      }
+      if (generateNumber(index, squares) === 0) {
+        return dispatch(markBlank(index));
       }
       if (squares[index].mine.isMine === false) {
         return dispatch(determineSquare(index));
@@ -43,7 +46,8 @@ export const Grid: React.FC = () => {
             >
               {square.mine.show && <FontAwesomeIcon icon={faBomb} />}
               {square.flag && <FontAwesomeIcon icon={faFlag} />}
-              {square.numOrBlank && generateNumber(index, squares)}
+              {square.number && generateNumber(index, squares)}
+              {square.blank && <StyledBlankSpan />}
             </StyledDiv>
           );
         })}
@@ -51,6 +55,12 @@ export const Grid: React.FC = () => {
     </StyledWrapper>
   );
 };
+
+const StyledBlankSpan = styled.span`
+  background-color: lightgrey;
+  width: 30px;
+  height: 30px;
+`;
 
 const StyledGrid = styled.div`
   display: grid;

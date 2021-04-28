@@ -6,8 +6,9 @@ type mineState = {
 };
 
 type squareState = {
+  blank: boolean;
   flag: boolean;
-  numOrBlank: boolean;
+  number: boolean;
   mine: mineState;
 };
 
