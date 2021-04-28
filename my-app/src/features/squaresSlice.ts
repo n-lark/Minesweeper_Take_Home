@@ -8,11 +8,9 @@ type mineState = {
 };
 
 type squareState = {
-  blank: boolean;
   flag: boolean;
-  number: boolean;
+  numOrBlank: boolean;
   mine: mineState;
-  id?: number;
 };
 
 type squaresInitialState = {
@@ -31,9 +29,8 @@ export const squaresSlice = createSlice({
       let squaresArray = [];
       for (let i = 0; i < action.payload; i++) {
         squaresArray.push({
-          blank: false,
           flag: false,
-          number: false,
+          numOrBlank: false,
           mine: { show: false, isMine: false },
         });
       }
@@ -44,20 +41,16 @@ export const squaresSlice = createSlice({
       for (let i = 0; i < state.value.length; i++) {
         if (i < Math.floor(state.value.length * 0.2)) {
           squaresArray.push({
-            blank: false,
             flag: false,
-            number: false,
+            numOrBlank: false,
             mine: { show: false, isMine: true },
-            id: Math.round(Math.random() * 100000000),
           });
         }
         if (i >= Math.floor(state.value.length * 0.2)) {
           squaresArray.push({
-            blank: false,
             flag: false,
-            number: false,
+            numOrBlank: false,
             mine: { show: false, isMine: false },
-            id: Math.round(Math.random() * 100000000),
           });
         }
       }
@@ -73,6 +66,15 @@ export const squaresSlice = createSlice({
       });
       state.value = minesExposed;
     },
+    determineSquare: (state, action) => {
+      const numberSquares = state.value.map((square, index) => {
+        if (index === action.payload) {
+          square.numOrBlank = true;
+        }
+        return square;
+      });
+      state.value = numberSquares;
+    },
     resetSquares: (state) => {
       state.value = [];
     },
@@ -84,6 +86,7 @@ export const {
   resetSquares,
   distributeMines,
   exposeMines,
+  determineSquare,
 } = squaresSlice.actions;
 
 export const selectSquares = (state: RootState) => state.squares.value;
