@@ -8,8 +8,9 @@ type mineState = {
 };
 
 type squareState = {
+  blank: boolean;
   flag: boolean;
-  numOrBlank: boolean;
+  number: boolean;
   mine: mineState;
 };
 
@@ -29,8 +30,9 @@ export const squaresSlice = createSlice({
       let squaresArray = [];
       for (let i = 0; i < action.payload; i++) {
         squaresArray.push({
+          blank: false,
           flag: false,
-          numOrBlank: false,
+          number: false,
           mine: { show: false, isMine: false },
         });
       }
@@ -41,15 +43,17 @@ export const squaresSlice = createSlice({
       for (let i = 0; i < state.value.length; i++) {
         if (i < Math.floor(state.value.length * 0.2)) {
           squaresArray.push({
+            blank: false,
             flag: false,
-            numOrBlank: false,
+            number: false,
             mine: { show: false, isMine: true },
           });
         }
         if (i >= Math.floor(state.value.length * 0.2)) {
           squaresArray.push({
+            blank: false,
             flag: false,
-            numOrBlank: false,
+            number: false,
             mine: { show: false, isMine: false },
           });
         }
@@ -69,11 +73,20 @@ export const squaresSlice = createSlice({
     determineSquare: (state, action) => {
       const numberSquares = state.value.map((square, index) => {
         if (index === action.payload) {
-          square.numOrBlank = true;
+          square.number = true;
         }
         return square;
       });
       state.value = numberSquares;
+    },
+    markBlank: (state, action) => {
+      const blankSquares = state.value.map((square, index) => {
+        if (index === action.payload) {
+          square.blank = true;
+        }
+        return square;
+      });
+      state.value = blankSquares;
     },
     resetSquares: (state) => {
       state.value = [];
@@ -87,6 +100,7 @@ export const {
   distributeMines,
   exposeMines,
   determineSquare,
+  markBlank,
 } = squaresSlice.actions;
 
 export const selectSquares = (state: RootState) => state.squares.value;
