@@ -21,7 +21,7 @@ export const Game: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(generateSquares(20));
+    dispatch(generateSquares(16));
   }, [dispatch]);
 
   return (
