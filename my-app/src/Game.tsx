@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../src/app/hooks";
 import { startTimer } from "./features/timerSlice";
-import { generateSquares } from "./features/squaresSlice";
+import { generateBlankSquares } from "./features/squaresSlice";
 import { Grid } from "./Grid";
 import { Timer } from "./Timer";
 
@@ -21,7 +21,7 @@ export const Game: React.FC = () => {
   // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(generateSquares(16));
+    dispatch(generateBlankSquares(16));
   }, [dispatch]);
 
   return (

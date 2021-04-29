@@ -3,11 +3,10 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../src/app/hooks";
-import { distributeMines } from "./features/squaresSlice";
 import { useAppDispatch } from "./app/hooks";
-import { exposeMines } from "./features/squaresSlice";
-import { determineSquare, markBlank } from "./features/squaresSlice";
-import { generateNumber } from "./utility/generateNumber";
+import { shuffleMines } from "./features/squaresSlice";
+// import { determineSquare } from "./features/squaresSlice";
+// import { generateNumber } from "./utility/generateNumber";
 // import { Square } from "./Square";
 
 export const Grid: React.FC = () => {
@@ -15,41 +14,44 @@ export const Grid: React.FC = () => {
   const squares = useAppSelector((state) => state.squares.value);
   const dispatch = useAppDispatch();
 
-  const uncoverSquare = (index: number) => {
+  const uncoverSquare = (row: number, index: number) => {
     if (stage === 0) {
-      dispatch(distributeMines());
+      if (squares[row][index].mine.isMine) {
+        dispatch(shuffleMines({ row, index }));
+      }
       setStage(1);
     }
-    if (stage > 0) {
-      if (squares[index].mine.isMine === true) {
-        return dispatch(exposeMines());
-      }
-      if (generateNumber(index, squares) === 0) {
-        return dispatch(markBlank(index));
-      }
-      if (squares[index].mine.isMine === false) {
-        return dispatch(determineSquare(index));
-      }
-    }
+    // if (stage > 0) {
+    //   //   if (squares[index].mine.isMine === true) {
+    //   //     return dispatch(exposeMines());
+    //   //   }
+    //   //   if (generateNumber(index, squares) === 0) {
+    //   //     return dispatch(markBlank(index));
+    //   //   }
+
+    //   dispatch(determineSquare(index));
+    // }
   };
 
   return (
     <StyledWrapper>
       <StyledGrid>
-        {squares.map((square, index) => {
-          return (
-            <StyledDiv
-              key={index}
-              onClick={() => {
-                uncoverSquare(index);
-              }}
-            >
-              {square.mine.show && <FontAwesomeIcon icon={faBomb} />}
-              {square.flag && <FontAwesomeIcon icon={faFlag} />}
-              {square.number && generateNumber(index, squares)}
-              {square.blank && <StyledBlankSpan />}
-            </StyledDiv>
-          );
+        {squares.map((square, row) => {
+          return square.map((piece, i) => {
+            return (
+              <StyledDiv
+                key={i}
+                onClick={() => {
+                  uncoverSquare(row, i);
+                }}
+              >
+                {piece.mine.isMine && <FontAwesomeIcon icon={faBomb} />}
+                {piece.flag && <FontAwesomeIcon icon={faFlag} />}
+                {/* {piece.number && generateNumber(index, squares)} */}
+                {piece.blank && <StyledBlankSpan />}
+              </StyledDiv>
+            );
+          });
         })}
       </StyledGrid>
     </StyledWrapper>
