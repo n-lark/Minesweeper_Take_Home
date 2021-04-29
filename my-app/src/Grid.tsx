@@ -4,33 +4,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../src/app/hooks";
 import { useAppDispatch } from "./app/hooks";
-import { shuffleMines } from "./features/squaresSlice";
+import { shuffleMines, exposeMines, markBlank } from "./features/squaresSlice";
 // import { determineSquare } from "./features/squaresSlice";
-// import { generateNumber } from "./utility/generateNumber";
+import { generateNumber } from "./utility/generateNumber";
 // import { Square } from "./Square";
 
 export const Grid: React.FC = () => {
-  const [stage, setStage] = useState<number>(0);
+  const [firstClick, setFirstClick] = useState<boolean>(true);
   const squares = useAppSelector((state) => state.squares.value);
   const dispatch = useAppDispatch();
 
   const uncoverSquare = (row: number, index: number) => {
-    if (stage === 0) {
+    if (firstClick) {
       if (squares[row][index].mine.isMine) {
         dispatch(shuffleMines({ row, index }));
       }
-      setStage(1);
+      setFirstClick(false);
     }
-    // if (stage > 0) {
-    //   //   if (squares[index].mine.isMine === true) {
-    //   //     return dispatch(exposeMines());
-    //   //   }
-    //   //   if (generateNumber(index, squares) === 0) {
-    //   //     return dispatch(markBlank(index));
-    //   //   }
+    if (!firstClick) {
+      if (squares[row][index].mine.isMine === true) {
+        return dispatch(exposeMines());
+      }
+      if (generateNumber(row, index, squares) === 0) {
+        return dispatch(markBlank({ row, index }));
+      }
 
-    //   dispatch(determineSquare(index));
-    // }
+      // dispatch(determineSquare(index));
+    }
   };
 
   return (
@@ -45,7 +45,8 @@ export const Grid: React.FC = () => {
                   uncoverSquare(row, i);
                 }}
               >
-                {piece.mine.isMine && <FontAwesomeIcon icon={faBomb} />}
+                {piece.mine.show && <FontAwesomeIcon icon={faBomb} />}
+                {piece.mine.isMine && <StyledMineSpan />}
                 {piece.flag && <FontAwesomeIcon icon={faFlag} />}
                 {/* {piece.number && generateNumber(index, squares)} */}
                 {piece.blank && <StyledBlankSpan />}
@@ -57,6 +58,12 @@ export const Grid: React.FC = () => {
     </StyledWrapper>
   );
 };
+
+const StyledMineSpan = styled.span`
+  border: 1px solid red;
+  width: 30px;
+  height: 30px;
+`;
 
 const StyledBlankSpan = styled.span`
   background-color: lightgrey;
