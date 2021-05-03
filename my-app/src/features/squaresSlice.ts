@@ -30,7 +30,7 @@ export const squaresSlice = createSlice({
       let squaresArray = [];
       let nestedArray = [];
       for (let i = 0; i < action.payload.squaresNum; i++) {
-        if (i <= Math.floor(action.payload.squaresNum * 0.2)) {
+        if (i <= Math.floor(action.payload.squaresNum * 0.15)) {
           nestedArray.push({
             blank: false,
             flag: false,
@@ -38,7 +38,7 @@ export const squaresSlice = createSlice({
             mine: { show: false, isMine: true },
           });
         }
-        if (i > Math.floor(action.payload.squaresNum * 0.2)) {
+        if (i > Math.floor(action.payload.squaresNum * 0.15)) {
           nestedArray.push({
             blank: false,
             flag: false,

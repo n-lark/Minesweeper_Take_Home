@@ -19,7 +19,7 @@ export const numOfSquaresSlice = createSlice({
   initialState,
   reducers: {
     setNumOfSquares: (state, action) => {
-      state.value.squaresNum = action.payload.squares;
+      state.value.squaresNum = action.payload.squaresNum;
       state.value.basis = action.payload.basis;
     },
     resetNumOfSquares: (state) => {
