@@ -4,7 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../src/app/hooks";
 import { useAppDispatch } from "./app/hooks";
-import { shuffleMines, exposeMines, markBlank } from "./features/squaresSlice";
+import {
+  shuffleMines,
+  exposeMines,
+  markBlank,
+  markNumber,
+} from "./features/squaresSlice";
 // import { determineSquare } from "./features/squaresSlice";
 import { generateNumber } from "./utility/generateNumber";
 // import { Square } from "./Square";
@@ -21,6 +26,7 @@ export const Grid: React.FC = () => {
       }
       setFirstClick(false);
     }
+
     if (!firstClick) {
       if (squares[row][index].mine.isMine === true) {
         return dispatch(exposeMines());
@@ -28,8 +34,9 @@ export const Grid: React.FC = () => {
       if (generateNumber(row, index, squares) === 0) {
         return dispatch(markBlank({ row, index }));
       }
-
-      // dispatch(determineSquare(index));
+      if (generateNumber(row, index, squares) > 0) {
+        return dispatch(markNumber({ row, index }));
+      }
     }
   };
 
@@ -48,7 +55,7 @@ export const Grid: React.FC = () => {
                 {piece.mine.show && <FontAwesomeIcon icon={faBomb} />}
                 {piece.mine.isMine && <StyledMineSpan />}
                 {piece.flag && <FontAwesomeIcon icon={faFlag} />}
-                {/* {piece.number && generateNumber(index, squares)} */}
+                {piece.number && generateNumber(row, i, squares)}
                 {piece.blank && <StyledBlankSpan />}
               </StyledDiv>
             );
@@ -66,7 +73,7 @@ const StyledMineSpan = styled.span`
 `;
 
 const StyledBlankSpan = styled.span`
-  background-color: lightgrey;
+  background-color: #f0f0f0;
   width: 30px;
   height: 30px;
 `;
