@@ -21,29 +21,45 @@ type gridContainer = {
 export const Grid: React.FC = () => {
   const [firstClick, setFirstClick] = useState<boolean>(true);
   const squares = useAppSelector((state) => state.squares.value);
-  const { basis } = useAppSelector((state) => state.numOfSquares.value);
+  const { squaresNum, basis } = useAppSelector(
+    (state) => state.numOfSquares.value
+  );
   const dispatch = useAppDispatch();
 
   const uncoverSquare = (row: number, index: number) => {
     if (firstClick) {
       if (squares[row][index].mine.isMine) {
         dispatch(shuffleMines({ row, index }));
+        if (generateNumber(row, index, squares) === 0) {
+          dispatch(markBlank({ row, index }));
+        }
+        if (generateNumber(row, index, squares) > 0) {
+          dispatch(markNumber({ row, index }));
+        }
       }
       setFirstClick(false);
+      if (generateNumber(row, index, squares) === 0) {
+        dispatch(markBlank({ row, index }));
+      }
+      if (generateNumber(row, index, squares) > 0) {
+        dispatch(markNumber({ row, index }));
+      }
     }
 
     if (!firstClick) {
       if (squares[row][index].mine.isMine === true) {
-        return dispatch(exposeMines());
+        dispatch(exposeMines());
       }
       if (generateNumber(row, index, squares) === 0) {
-        return dispatch(markBlank({ row, index }));
+        dispatch(markBlank({ row, index }));
       }
       if (generateNumber(row, index, squares) > 0) {
-        return dispatch(markNumber({ row, index }));
+        dispatch(markNumber({ row, index }));
       }
     }
   };
+
+  console.log(squaresNum, basis);
 
   return (
     <StyledWrapper>
