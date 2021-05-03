@@ -50,7 +50,6 @@ export const shuffleMineLocations = (
     index !== undefined &&
     nestedArray[row][index].mine.isMine
   ) {
-    console.log("ARE WE HERE");
     return shuffleMineLocations(nestedArray, row, index);
   }
 

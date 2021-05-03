@@ -72,15 +72,17 @@ export const squaresSlice = createSlice({
       });
       state.value = minesExposed;
     },
-    // determineSquare: (state, action) => {
-    //   const numberSquares = state.value.map((square, index) => {
-    //     if (index === action.payload) {
-    //       square.number = true;
-    //     }
-    //     return square;
-    //   });
-    //   state.value = numberSquares;
-    // },
+    markNumber: (state, action) => {
+      const numberSquares = state.value.map((square) => {
+        return square.map((piece) => {
+          if (state.value[action.payload.row][action.payload.index] === piece) {
+            piece.number = true;
+          }
+          return piece;
+        });
+      });
+      state.value = numberSquares;
+    },
     markBlank: (state, action) => {
       const blankSquares = state.value.map((square) => {
         return square.map((piece) => {
@@ -103,7 +105,7 @@ export const {
   resetSquares,
   shuffleMines,
   exposeMines,
-  // determineSquare,
+  markNumber,
   markBlank,
 } = squaresSlice.actions;
 
