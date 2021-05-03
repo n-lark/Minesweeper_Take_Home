@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../src/app/hooks";
+import { useAppSelector } from "../src/app/hooks";
 import { startTimer } from "./features/timerSlice";
 import { generateBlankSquares } from "./features/squaresSlice";
 import { Grid } from "./Grid";
@@ -9,6 +10,9 @@ import { Timer } from "./Timer";
 
 export const Game: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { squaresNum, basis } = useAppSelector(
+    (state) => state.numOfSquares.value
+  );
 
   // useEffect(() => {
   //   const gameTimer = setInterval(() => {
@@ -21,8 +25,8 @@ export const Game: React.FC = () => {
   // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(generateBlankSquares(16));
-  }, [dispatch]);
+    dispatch(generateBlankSquares({ squaresNum, basis }));
+  }, [squaresNum, basis, dispatch]);
 
   return (
     <StyledWrapper>
