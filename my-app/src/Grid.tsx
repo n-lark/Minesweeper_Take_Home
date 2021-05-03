@@ -9,6 +9,8 @@ import {
   exposeMines,
   markBlank,
   markNumber,
+  flagMine,
+  unFlagMine,
 } from "./features/squaresSlice";
 // import { determineSquare } from "./features/squaresSlice";
 import { generateNumber } from "./utility/generateNumber";
@@ -21,15 +23,14 @@ type gridContainer = {
 export const Grid: React.FC = () => {
   const [firstClick, setFirstClick] = useState<boolean>(true);
   const squares = useAppSelector((state) => state.squares.value);
-  const { squaresNum, basis } = useAppSelector(
-    (state) => state.numOfSquares.value
-  );
+  const { basis } = useAppSelector((state) => state.numOfSquares.value);
   const dispatch = useAppDispatch();
 
   const uncoverSquare = (row: number, index: number) => {
     if (firstClick) {
       if (squares[row][index].mine.isMine) {
         dispatch(shuffleMines({ row, index }));
+
         if (generateNumber(row, index, squares) === 0) {
           dispatch(markBlank({ row, index }));
         }
@@ -48,7 +49,7 @@ export const Grid: React.FC = () => {
 
     if (!firstClick) {
       if (squares[row][index].mine.isMine === true) {
-        dispatch(exposeMines());
+        return dispatch(exposeMines());
       }
       if (generateNumber(row, index, squares) === 0) {
         dispatch(markBlank({ row, index }));
@@ -59,8 +60,6 @@ export const Grid: React.FC = () => {
     }
   };
 
-  console.log(squaresNum, basis);
-
   return (
     <StyledWrapper>
       <StyledGrid rowLength={basis}>
@@ -69,8 +68,18 @@ export const Grid: React.FC = () => {
             return (
               <StyledDiv
                 key={i}
-                onClick={() => {
-                  uncoverSquare(row, i);
+                onClick={(e) => {
+                  if (e.altKey) {
+                    if (!squares[row][i].flag) {
+                      dispatch(flagMine({ row, i }));
+                    }
+                    if (squares[row][i].flag) {
+                      dispatch(unFlagMine({ row, i }));
+                    }
+                  }
+                  if (!e.altKey) {
+                    uncoverSquare(row, i);
+                  }
                 }}
               >
                 {piece.mine.show && <FontAwesomeIcon icon={faBomb} />}
@@ -88,9 +97,9 @@ export const Grid: React.FC = () => {
 };
 
 const StyledMineSpan = styled.span`
-  border: 1px solid red;
-  width: 30px;
-  height: 30px;
+  background: pink;
+  width: 5px;
+  height: 5px;
 `;
 
 const StyledBlankSpan = styled.span`
