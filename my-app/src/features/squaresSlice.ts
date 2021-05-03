@@ -29,8 +29,8 @@ export const squaresSlice = createSlice({
     generateBlankSquares: (state, action) => {
       let squaresArray = [];
       let nestedArray = [];
-      for (let i = 0; i < action.payload; i++) {
-        if (i <= Math.floor(action.payload * 0.2)) {
+      for (let i = 0; i < action.payload.squaresNum; i++) {
+        if (i <= Math.floor(action.payload.squaresNum * 0.2)) {
           nestedArray.push({
             blank: false,
             flag: false,
@@ -38,7 +38,7 @@ export const squaresSlice = createSlice({
             mine: { show: false, isMine: true },
           });
         }
-        if (i > Math.floor(action.payload * 0.2)) {
+        if (i > Math.floor(action.payload.squaresNum * 0.2)) {
           nestedArray.push({
             blank: false,
             flag: false,
@@ -46,7 +46,7 @@ export const squaresSlice = createSlice({
             mine: { show: false, isMine: false },
           });
         }
-        if (nestedArray.length === 4) {
+        if (nestedArray.length === action.payload.basis) {
           squaresArray.push(nestedArray);
           nestedArray = [];
         }

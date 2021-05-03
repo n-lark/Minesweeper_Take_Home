@@ -14,9 +14,14 @@ import {
 import { generateNumber } from "./utility/generateNumber";
 // import { Square } from "./Square";
 
+type gridContainer = {
+  rowLength: number;
+};
+
 export const Grid: React.FC = () => {
   const [firstClick, setFirstClick] = useState<boolean>(true);
   const squares = useAppSelector((state) => state.squares.value);
+  const { basis } = useAppSelector((state) => state.numOfSquares.value);
   const dispatch = useAppDispatch();
 
   const uncoverSquare = (row: number, index: number) => {
@@ -42,7 +47,7 @@ export const Grid: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <StyledGrid>
+      <StyledGrid rowLength={basis}>
         {squares.map((square, row) => {
           return square.map((piece, i) => {
             return (
@@ -78,9 +83,9 @@ const StyledBlankSpan = styled.span`
   height: 30px;
 `;
 
-const StyledGrid = styled.div`
+const StyledGrid = styled.div<gridContainer>`
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 30px));
+  grid-template-columns: repeat(${(p) => p.rowLength}, minmax(0, 30px));
   border: 0.5px solid lightgray;
   > div {
     height: 30px;
@@ -97,6 +102,3 @@ const StyledDiv = styled.div`
 const StyledWrapper = styled.div`
   margin: auto;
 `;
-
-// the grid will render the appropriate amount of squares, squares should have props to indicate the color(or image) for styled comps,
-// like this color: ${(props) => props.color}
