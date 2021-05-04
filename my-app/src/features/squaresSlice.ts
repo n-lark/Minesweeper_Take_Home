@@ -96,6 +96,36 @@ export const squaresSlice = createSlice({
       });
       state.value = blankSquares;
     },
+    markBlankTEST: (state, action) => {
+      const blankSquares = state.value.map((square) => {
+        return square.map((piece) => {
+          if (
+            state.value[action.payload.rowToDispatch][
+              action.payload.indexToDispatch
+            ] === piece
+          ) {
+            piece.blank = true;
+          }
+          return piece;
+        });
+      });
+      state.value = blankSquares;
+    },
+    markNumberTEST: (state, action) => {
+      const numberSquares = state.value.map((square) => {
+        return square.map((piece) => {
+          if (
+            state.value[action.payload.rowToDispatch][
+              action.payload.indexToDispatch
+            ] === piece
+          ) {
+            piece.number = true;
+          }
+          return piece;
+        });
+      });
+      state.value = numberSquares;
+    },
     flagMine: (state, action) => {
       const flagSquares = state.value.map((square) => {
         return square.map((piece) => {
@@ -120,6 +150,9 @@ export const squaresSlice = createSlice({
       });
       state.value = flagSquares;
     },
+    // collapseBlankSquares: (state, action) => {
+
+    // },
     resetSquares: (state) => {
       state.value = [];
     },
@@ -135,6 +168,9 @@ export const {
   markBlank,
   flagMine,
   unFlagMine,
+  markBlankTEST,
+  markNumberTEST,
+  // collapseBlankSquares,
 } = squaresSlice.actions;
 
 export const selectSquares = (state: RootState) => state.squares.value;
