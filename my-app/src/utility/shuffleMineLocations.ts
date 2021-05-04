@@ -8,8 +8,8 @@ type mineState = {
 type squareState = {
   blank: boolean;
   flag: boolean;
-  number: boolean;
   mine: mineState;
+  number: boolean;
 };
 
 export const shuffleMineLocations = (

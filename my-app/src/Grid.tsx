@@ -11,13 +11,26 @@ import {
   markNumber,
   flagMine,
   unFlagMine,
+  markBlankTEST,
+  markNumberTEST,
+  // collapseBlankSquares,
 } from "./features/squaresSlice";
-// import { determineSquare } from "./features/squaresSlice";
 import { generateNumber } from "./utility/generateNumber";
-// import { Square } from "./Square";
 
 type gridContainer = {
   rowLength: number;
+};
+
+type mineState = {
+  show: boolean;
+  isMine: boolean;
+};
+
+type squareState = {
+  blank: boolean;
+  flag: boolean;
+  number: boolean;
+  mine: mineState;
 };
 
 export const Grid: React.FC = () => {
@@ -30,21 +43,48 @@ export const Grid: React.FC = () => {
     if (firstClick) {
       if (squares[row][index].mine.isMine) {
         dispatch(shuffleMines({ row, index }));
-
-        if (generateNumber(row, index, squares) === 0) {
-          dispatch(markBlank({ row, index }));
-        }
-        if (generateNumber(row, index, squares) > 0) {
-          dispatch(markNumber({ row, index }));
-        }
-      }
-      setFirstClick(false);
-      if (generateNumber(row, index, squares) === 0) {
-        dispatch(markBlank({ row, index }));
       }
       if (generateNumber(row, index, squares) > 0) {
         dispatch(markNumber({ row, index }));
       }
+      if (generateNumber(row, index, squares) === 0) {
+        dispatch(markBlank({ row, index }));
+        // dispatch(collapseBlankSquares({ row, index }));
+        let count = 0;
+        const mess = (row: number, index: number, squares: squareState[][]) => {
+          if (count === basis * basis) {
+            return count;
+          }
+          console.log("MESS", count);
+          count++;
+          const x = [-1, -1, -1, 0, 0, 1, 1, 1];
+          const y = [-1, 0, 1, -1, 1, -1, 0, 1];
+
+          x.forEach((r, i) => {
+            if (
+              row + r > -1 &&
+              row + r < squares.length &&
+              index + y[i] > -1 &&
+              index + y[i] < squares.length
+            ) {
+              if (generateNumber(row + r, index + y[i], squares) === 0) {
+                let rowToDispatch = row + r;
+                let indexToDispatch = index + y[i];
+                dispatch(markBlankTEST({ rowToDispatch, indexToDispatch }));
+                mess(row + r, index + y[i], squares);
+              }
+              if (generateNumber(row + r, index + y[i], squares) > 0) {
+                let rowToDispatch = row + r;
+                let indexToDispatch = index + y[i];
+                dispatch(markNumberTEST({ rowToDispatch, indexToDispatch }));
+              }
+            }
+          });
+        };
+
+        return mess(row, index, squares);
+      }
+      setFirstClick(false);
     }
 
     if (!firstClick) {
