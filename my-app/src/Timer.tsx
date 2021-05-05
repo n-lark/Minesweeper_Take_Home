@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppSelector } from "./app/hooks";
-import { formatTime } from "./utility/formatTime";
 import styled from "styled-components";
+import { formatTime } from "./utility/formatTime";
 
 const Timer: React.FC = () => {
   const time = useAppSelector((state) => state.timer.value);

@@ -12,6 +12,7 @@ import {
   flagMine,
   unFlagMine,
 } from "./features/squaresSlice";
+import { endGame } from "./features/gameOverSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
 
@@ -35,8 +36,8 @@ export const Grid: React.FC = () => {
   const [firstClick, setFirstClick] = useState<boolean>(true);
   const squares = useAppSelector((state) => state.squares.value);
   const { basis } = useAppSelector((state) => state.numOfSquares.value);
+  const gameOver = useAppSelector((state) => state.gameOver.value);
   const dispatch = useAppDispatch();
-
   const checkedCoordinates = [];
 
   const expandSquares = (
@@ -72,7 +73,11 @@ export const Grid: React.FC = () => {
   };
 
   const uncoverSquare = (rowCurrent: number, columnCurrent: number) => {
+    if (gameOver) {
+      return null;
+    }
     if (firstClick) {
+      setFirstClick(false);
       if (squares[rowCurrent][columnCurrent].mine.isMine) {
         dispatch(shuffleMines({ rowCurrent, columnCurrent }));
       }
@@ -83,11 +88,11 @@ export const Grid: React.FC = () => {
         dispatch(markBlank({ rowCurrent, columnCurrent }));
         return expandSquares(rowCurrent, columnCurrent, squares);
       }
-      setFirstClick(false);
     }
 
     if (!firstClick) {
       if (squares[rowCurrent][columnCurrent].mine.isMine === true) {
+        dispatch(endGame());
         return dispatch(exposeMines());
       }
       if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {

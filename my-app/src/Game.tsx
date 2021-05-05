@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../src/app/hooks";
-import { useAppSelector } from "../src/app/hooks";
+import { useAppDispatch } from "./app/hooks";
+import { useAppSelector } from "./app/hooks";
 import { startTimer } from "./features/timerSlice";
 import { generateBlankSquares } from "./features/squaresSlice";
 import { Grid } from "./Grid";
@@ -10,6 +10,7 @@ import { Timer } from "./Timer";
 
 export const Game: React.FC = () => {
   const dispatch = useAppDispatch();
+  const gameOver = useAppSelector((state) => state.gameOver.value);
   const { squaresNum, basis } = useAppSelector(
     (state) => state.numOfSquares.value
   );
@@ -31,13 +32,21 @@ export const Game: React.FC = () => {
   return (
     <StyledWrapper>
       <Timer />
+      {gameOver && <StyledGameOver>Game Over</StyledGameOver>}
       <Grid />
       <StyledLink to="./GameEnd">
-        <StyledButton>End Game TEMP</StyledButton>
+        <StyledButton>End Game</StyledButton>
       </StyledLink>
     </StyledWrapper>
   );
 };
+
+const StyledGameOver = styled.div`
+  color: grey;
+  font-size: 26px;
+  position: fixed;
+  margin-top: 15px;
+`;
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -59,7 +68,7 @@ const StyledButton = styled.button`
   color: gray;
   font-size: 20px;
   padding: 10px 16px;
-  border: 1px solid gray;
+  border: 1px solid lightgray;
   background-color: white;
   border-radius: 8px;
   outline: none;

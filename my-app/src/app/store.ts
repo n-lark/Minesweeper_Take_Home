@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { timerSliceReducer } from "../features/timerSlice";
 import { squaresSliceReducer } from "../features/squaresSlice";
 import { numOfSquaresSliceReducer } from "../features/numOfSquaresSlice";
+import { gameOverSliceReducer } from "../features/gameOverSlice";
 
 export const store = configureStore({
   reducer: {
     timer: timerSliceReducer,
     squares: squaresSliceReducer,
     numOfSquares: numOfSquaresSliceReducer,
+    gameOver: gameOverSliceReducer,
   },
 });
 
