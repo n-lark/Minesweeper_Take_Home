@@ -16,6 +16,7 @@ import {
   // collapseBlankSquares,
 } from "./features/squaresSlice";
 import { generateNumber } from "./utility/generateNumber";
+import { searchCoordinates } from "./utility/searchCoordinates";
 
 type gridContainer = {
   rowLength: number;
@@ -51,11 +52,14 @@ export const Grid: React.FC = () => {
         dispatch(markBlank({ row, index }));
         // dispatch(collapseBlankSquares({ row, index }));
         let count = 0;
+        let checked = [];
+
         const mess = (row: number, index: number, squares: squareState[][]) => {
-          if (count === basis * basis) {
+          if (count === 500) {
             return count;
           }
           console.log("MESS", count);
+          console.log(checked);
           count++;
           const x = [-1, -1, -1, 0, 0, 1, 1, 1];
           const y = [-1, 0, 1, -1, 1, -1, 0, 1];
@@ -67,16 +71,26 @@ export const Grid: React.FC = () => {
               index + y[i] > -1 &&
               index + y[i] < squares.length
             ) {
-              if (generateNumber(row + r, index + y[i], squares) === 0) {
+              if (
+                generateNumber(row + r, index + y[i], squares) === 0 &&
+                searchCoordinates(checked, [row + r, index + y[i]]) === false
+              ) {
                 let rowToDispatch = row + r;
                 let indexToDispatch = index + y[i];
+                console.log(rowToDispatch, indexToDispatch);
                 dispatch(markBlankTEST({ rowToDispatch, indexToDispatch }));
-                mess(row + r, index + y[i], squares);
+                checked.push([row + r, index + y[i]]);
+                while (count < 50) {
+                  return mess(row + r, index + y[i], squares);
+                }
               }
+
               if (generateNumber(row + r, index + y[i], squares) > 0) {
-                let rowToDispatch = row + r;
-                let indexToDispatch = index + y[i];
-                dispatch(markNumberTEST({ rowToDispatch, indexToDispatch }));
+                let rowToDispatchNUM = row + r;
+                let indexToDispatchNUM = index + y[i];
+                dispatch(
+                  markNumberTEST({ rowToDispatchNUM, indexToDispatchNUM })
+                );
               }
             }
           });

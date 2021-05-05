@@ -11,7 +11,7 @@ type numOfSquaresState = {
 };
 
 const initialState: numOfSquaresState = {
-  value: { squaresNum: 16, basis: 4 },
+  value: { squaresNum: 64, basis: 8 },
 };
 
 export const numOfSquaresSlice = createSlice({
@@ -23,7 +23,7 @@ export const numOfSquaresSlice = createSlice({
       state.value.basis = action.payload.basis;
     },
     resetNumOfSquares: (state) => {
-      state.value = { squaresNum: 16, basis: 4 };
+      state.value = { squaresNum: 64, basis: 8 };
     },
   },
 });

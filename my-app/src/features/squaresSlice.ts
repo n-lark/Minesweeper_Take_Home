@@ -115,8 +115,8 @@ export const squaresSlice = createSlice({
       const numberSquares = state.value.map((square) => {
         return square.map((piece) => {
           if (
-            state.value[action.payload.rowToDispatch][
-              action.payload.indexToDispatch
+            state.value[action.payload.rowToDispatchNUM][
+              action.payload.indexToDispatchNUM
             ] === piece
           ) {
             piece.number = true;
