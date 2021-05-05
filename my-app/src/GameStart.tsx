@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useAppDispatch } from "./app/hooks";
 import { resetTimer } from "./features/timerSlice";
 import { resetSquares } from "./features/squaresSlice";
+import { resetEndGame } from "./features/gameOverSlice";
 import {
   resetNumOfSquares,
   setNumOfSquares,
@@ -16,6 +17,7 @@ export const GameStart: React.FC = () => {
     dispatch(resetTimer());
     dispatch(resetSquares());
     dispatch(resetNumOfSquares());
+    dispatch(resetEndGame());
   }, [dispatch]);
 
   return (
@@ -107,7 +109,7 @@ const StyledButton = styled.button`
   color: gray;
   font-size: 20px;
   padding: 10px 16px;
-  border: 1px solid gray;
+  border: 1px solid lightgray;
   background-color: white;
   border-radius: 8px;
   outline: none;

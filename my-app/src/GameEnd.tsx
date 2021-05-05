@@ -21,7 +21,7 @@ const StyledButton = styled.button`
   color: gray;
   font-size: 20px;
   padding: 10px 16px;
-  border: 1px solid gray;
+  border: 1px solid lightgray;
   background-color: white;
   border-radius: 8px;
   outline: none;
@@ -48,4 +48,5 @@ const StyledLink = styled(Link)`
 const StyledDiv = styled.div`
   color: grey;
   margin-top: 50px;
+  font-size: 24px;
 `;
