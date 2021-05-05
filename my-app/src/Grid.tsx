@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
-import { useAppSelector } from "../src/app/hooks";
+import { useAppSelector } from "./app/hooks";
 import { useAppDispatch } from "./app/hooks";
 import {
   shuffleMines,
@@ -11,9 +11,6 @@ import {
   markNumber,
   flagMine,
   unFlagMine,
-  markBlankTEST,
-  markNumberTEST,
-  // collapseBlankSquares,
 } from "./features/squaresSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
@@ -40,76 +37,65 @@ export const Grid: React.FC = () => {
   const { basis } = useAppSelector((state) => state.numOfSquares.value);
   const dispatch = useAppDispatch();
 
-  const uncoverSquare = (row: number, index: number) => {
+  const checkedCoordinates = [];
+
+  const expandSquares = (
+    row: number,
+    column: number,
+    squares: squareState[][]
+  ) => {
+    const x = [-1, -1, -1, 0, 0, 1, 1, 1];
+    const y = [-1, 0, 1, -1, 1, -1, 0, 1];
+
+    x.forEach((r, i) => {
+      let rowCurrent = row + r;
+      let columnCurrent = column + y[i];
+      if (
+        rowCurrent > -1 &&
+        rowCurrent < squares.length &&
+        columnCurrent > -1 &&
+        columnCurrent < squares.length
+      ) {
+        if (
+          generateNumber(rowCurrent, columnCurrent, squares) === 0 &&
+          !searchCoordinates(checkedCoordinates, [rowCurrent, columnCurrent])
+        ) {
+          dispatch(markBlank({ rowCurrent, columnCurrent }));
+          checkedCoordinates.push([rowCurrent, columnCurrent]);
+          return expandSquares(rowCurrent, columnCurrent, squares);
+        }
+        if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
+          dispatch(markNumber({ rowCurrent, columnCurrent }));
+        }
+      }
+    });
+  };
+
+  const uncoverSquare = (rowCurrent: number, columnCurrent: number) => {
     if (firstClick) {
-      if (squares[row][index].mine.isMine) {
-        dispatch(shuffleMines({ row, index }));
+      if (squares[rowCurrent][columnCurrent].mine.isMine) {
+        dispatch(shuffleMines({ rowCurrent, columnCurrent }));
       }
-      if (generateNumber(row, index, squares) > 0) {
-        dispatch(markNumber({ row, index }));
+      if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
+        dispatch(markNumber({ rowCurrent, columnCurrent }));
       }
-      if (generateNumber(row, index, squares) === 0) {
-        dispatch(markBlank({ row, index }));
-        // dispatch(collapseBlankSquares({ row, index }));
-        let count = 0;
-        let checked = [];
-
-        const mess = (row: number, index: number, squares: squareState[][]) => {
-          if (count === 500) {
-            return count;
-          }
-          console.log("MESS", count);
-          console.log(checked);
-          count++;
-          const x = [-1, -1, -1, 0, 0, 1, 1, 1];
-          const y = [-1, 0, 1, -1, 1, -1, 0, 1];
-
-          x.forEach((r, i) => {
-            if (
-              row + r > -1 &&
-              row + r < squares.length &&
-              index + y[i] > -1 &&
-              index + y[i] < squares.length
-            ) {
-              if (
-                generateNumber(row + r, index + y[i], squares) === 0 &&
-                searchCoordinates(checked, [row + r, index + y[i]]) === false
-              ) {
-                let rowToDispatch = row + r;
-                let indexToDispatch = index + y[i];
-                console.log(rowToDispatch, indexToDispatch);
-                dispatch(markBlankTEST({ rowToDispatch, indexToDispatch }));
-                checked.push([row + r, index + y[i]]);
-                while (count < 50) {
-                  return mess(row + r, index + y[i], squares);
-                }
-              }
-
-              if (generateNumber(row + r, index + y[i], squares) > 0) {
-                let rowToDispatchNUM = row + r;
-                let indexToDispatchNUM = index + y[i];
-                dispatch(
-                  markNumberTEST({ rowToDispatchNUM, indexToDispatchNUM })
-                );
-              }
-            }
-          });
-        };
-
-        return mess(row, index, squares);
+      if (generateNumber(rowCurrent, columnCurrent, squares) === 0) {
+        dispatch(markBlank({ rowCurrent, columnCurrent }));
+        return expandSquares(rowCurrent, columnCurrent, squares);
       }
       setFirstClick(false);
     }
 
     if (!firstClick) {
-      if (squares[row][index].mine.isMine === true) {
+      if (squares[rowCurrent][columnCurrent].mine.isMine === true) {
         return dispatch(exposeMines());
       }
-      if (generateNumber(row, index, squares) === 0) {
-        dispatch(markBlank({ row, index }));
+      if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
+        dispatch(markNumber({ rowCurrent, columnCurrent }));
       }
-      if (generateNumber(row, index, squares) > 0) {
-        dispatch(markNumber({ row, index }));
+      if (generateNumber(rowCurrent, columnCurrent, squares) === 0) {
+        dispatch(markBlank({ rowCurrent, columnCurrent }));
+        return expandSquares(rowCurrent, columnCurrent, squares);
       }
     }
   };

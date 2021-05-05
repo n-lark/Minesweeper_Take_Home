@@ -1,12 +1,8 @@
-export const searchCoordinates = (
-  array: Array<number>[],
-  cords: Array<number>
-) => {
+export const searchCoordinates = (array: number[][], coordinates: number[]) => {
   let found = false;
 
   for (let i = 0; i < array.length; i++) {
-    console.log(array[i][0], cords[0]);
-    if (array[i][0] === cords[0] && array[i][1] === cords[1]) {
+    if (array[i][0] === coordinates[0] && array[i][1] === coordinates[1]) {
       found = true;
     }
   }
