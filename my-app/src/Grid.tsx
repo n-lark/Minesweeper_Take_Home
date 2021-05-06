@@ -5,7 +5,7 @@ import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "./app/hooks";
 import { useAppDispatch } from "./app/hooks";
 import {
-  shuffleMines,
+  deployMines,
   exposeMines,
   markBlank,
   markNumber,
@@ -35,7 +35,9 @@ type squareState = {
 export const Grid: React.FC = () => {
   const [firstClick, setFirstClick] = useState<boolean>(true);
   const squares = useAppSelector((state) => state.squares.value);
-  const { basis } = useAppSelector((state) => state.numOfSquares.value);
+  const { squaresNum, basis } = useAppSelector(
+    (state) => state.numOfSquares.value
+  );
   const gameOver = useAppSelector((state) => state.gameOver.value);
   const dispatch = useAppDispatch();
   const checkedCoordinates = [];
@@ -76,14 +78,11 @@ export const Grid: React.FC = () => {
     if (gameOver) {
       return null;
     }
-    if (squares[rowCurrent][columnCurrent].mine.isMine && firstClick) {
+    if (firstClick) {
       setFirstClick(false);
-      dispatch(shuffleMines({ rowCurrent, columnCurrent }));
+      dispatch(deployMines({ squaresNum, basis, rowCurrent, columnCurrent }));
     }
-    if (
-      squares[rowCurrent][columnCurrent].mine.isMine === true &&
-      !firstClick
-    ) {
+    if (squares[rowCurrent][columnCurrent].mine.isMine === true) {
       dispatch(endGame());
       return dispatch(exposeMines());
     }
