@@ -25,7 +25,7 @@ export { Flags };
 const StyledDiv: any = styled.div<flagType>`
   align-self: flex-end;
   padding: 10px 20px 0px 20px;
-  color: ${(props: flagType) => (props.color >= 0 ? `grey` : `#cf3232`)};
+  color: ${({ color }) => (color >= 0 ? `grey` : `#cf3232`)};
   width: 75px;
 `;
 
