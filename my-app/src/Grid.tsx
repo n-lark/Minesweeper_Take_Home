@@ -12,6 +12,7 @@ import {
   flagMine,
   unFlagMine,
 } from "./features/squaresSlice";
+import { incrementFlags, decrementFlags } from "./features/flagsSlice";
 import { endGame } from "./features/gameOverSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
@@ -79,17 +80,23 @@ export const Grid: React.FC = () => {
       return null;
     }
     if (firstClick) {
-      setFirstClick(false);
       dispatch(deployMines({ squaresNum, basis, rowCurrent, columnCurrent }));
+      setFirstClick(false);
     }
-    if (squares[rowCurrent][columnCurrent].mine.isMine === true) {
+    if (
+      squares[rowCurrent][columnCurrent].mine.isMine === true &&
+      !firstClick
+    ) {
       dispatch(endGame());
       return dispatch(exposeMines());
     }
-    if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
+    if (generateNumber(rowCurrent, columnCurrent, squares) > 0 && !firstClick) {
       dispatch(markNumber({ rowCurrent, columnCurrent }));
     }
-    if (generateNumber(rowCurrent, columnCurrent, squares) === 0) {
+    if (
+      generateNumber(rowCurrent, columnCurrent, squares) === 0 &&
+      !firstClick
+    ) {
       dispatch(markBlank({ rowCurrent, columnCurrent }));
       return expandSquares(rowCurrent, columnCurrent, squares);
     }
@@ -103,18 +110,27 @@ export const Grid: React.FC = () => {
             return (
               <StyledDiv
                 key={i}
+                id={`square${row}${i}`}
                 onClick={(e) => {
                   if (e.altKey) {
                     if (!squares[row][i].flag) {
                       dispatch(flagMine({ row, i }));
+                      dispatch(decrementFlags());
                     }
                     if (squares[row][i].flag) {
                       dispatch(unFlagMine({ row, i }));
+                      dispatch(incrementFlags());
                     }
                   }
                   if (!e.altKey) {
                     uncoverSquare(row, i);
                   }
+                  // if (firstClick) {
+                  //   let element: HTMLElement = document.getElementById(
+                  //     `square${row}${i}`
+                  //   ) as HTMLElement;
+                  //   element.click();
+                  // }
                 }}
               >
                 {piece.mine.show && <FontAwesomeIcon icon={faBomb} />}
@@ -157,6 +173,7 @@ const StyledGrid = styled.div<gridContainer>`
 
 const StyledDiv = styled.div`
   border: 0.5px solid lightgrey;
+  color: grey;
 `;
 
 const StyledWrapper = styled.div`

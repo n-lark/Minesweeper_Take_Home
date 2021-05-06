@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "./app/hooks";
 import { useAppSelector } from "./app/hooks";
 import { startTimer } from "./features/timerSlice";
+import { determineFlags } from "./features/flagsSlice";
 import { generateBlankSquares } from "./features/squaresSlice";
 import { Grid } from "./Grid";
 import { Timer } from "./Timer";
+import { Flags } from "./Flags";
 
 export const Game: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +16,7 @@ export const Game: React.FC = () => {
   const { squaresNum, basis } = useAppSelector(
     (state) => state.numOfSquares.value
   );
+  const numOfFlags = Math.floor(basis * basis * 0.15 + 1);
 
   // useEffect(() => {
   //   const gameTimer = setInterval(() => {
@@ -27,11 +30,13 @@ export const Game: React.FC = () => {
 
   useEffect(() => {
     dispatch(generateBlankSquares({ squaresNum, basis }));
-  }, [squaresNum, basis, dispatch]);
+    dispatch(determineFlags(numOfFlags));
+  }, [squaresNum, basis, dispatch, numOfFlags]);
 
   return (
     <StyledWrapper>
       <Timer />
+      <Flags />
       {gameOver && <StyledGameOver>Game Over</StyledGameOver>}
       <Grid />
       <StyledLink to="./GameEnd">

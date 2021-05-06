@@ -3,6 +3,7 @@ import { timerSliceReducer } from "../features/timerSlice";
 import { squaresSliceReducer } from "../features/squaresSlice";
 import { numOfSquaresSliceReducer } from "../features/numOfSquaresSlice";
 import { gameOverSliceReducer } from "../features/gameOverSlice";
+import { flagsSliceReducer } from "../features/flagsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     squares: squaresSliceReducer,
     numOfSquares: numOfSquaresSliceReducer,
     gameOver: gameOverSliceReducer,
+    flags: flagsSliceReducer,
   },
 });
 
