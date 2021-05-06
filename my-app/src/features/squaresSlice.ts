@@ -26,40 +26,53 @@ export const squaresSlice = createSlice({
   name: "squares",
   initialState,
   reducers: {
+    //: WritableDraft<squaresInitialState> import type state
+    // type action payload can be any, look this up
     generateBlankSquares: (state, action) => {
       const squaresArray = [];
       let nestedArray = [];
       for (let i = 0; i < action.payload.squaresNum; i++) {
-        if (i <= Math.floor(action.payload.squaresNum * 0.15)) {
-          nestedArray.push({
-            blank: false,
-            flag: false,
-            number: false,
-            mine: { show: false, isMine: true },
-          });
-        }
-        if (i > Math.floor(action.payload.squaresNum * 0.15)) {
-          nestedArray.push({
-            blank: false,
-            flag: false,
-            number: false,
-            mine: { show: false, isMine: false },
-          });
-        }
+        nestedArray.push({
+          blank: false,
+          flag: false,
+          number: false,
+          mine: { show: false, isMine: false },
+        });
         if (nestedArray.length === action.payload.basis) {
           squaresArray.push(nestedArray);
           nestedArray = [];
         }
       }
-      const shuffledSquares = shuffleMineLocations(squaresArray);
-      state.value.push(...shuffledSquares);
+      state.value.push(...squaresArray);
     },
-    shuffleMines: (state, action) => {
-      state.value = shuffleMineLocations(
-        state.value,
-        action.payload.row,
-        action.payload.column
+    deployMines: (state, action) => {
+      const flatArray = state.value.flat(Infinity);
+      const nestedArray: Array<Array<squareState>> = [];
+      let tempArray: Array<squareState> = [];
+
+      flatArray.map((square: any, index) => {
+        if (index <= Math.floor(flatArray.length * 0.15)) {
+          square.mine.isMine = true;
+          nestedArray.push(square);
+        }
+        if (index > Math.floor(flatArray.length * 0.15)) {
+          nestedArray.push(square);
+        }
+        if (nestedArray.length === action.payload.basis) {
+          nestedArray.push(tempArray);
+          tempArray = [];
+        }
+        return square;
+      });
+
+      const shuffledSquares = shuffleMineLocations(
+        nestedArray,
+        action.payload.rowCurrent,
+        action.payload.columnCurrent,
+        action.payload.basis
       );
+
+      state.value = shuffledSquares;
     },
     exposeMines: (state) => {
       const minesExposed = state.value.map((square) => {
@@ -68,7 +81,6 @@ export const squaresSlice = createSlice({
             piece.mine.show = true;
             piece.flag = false;
           }
-
           return piece;
         });
       });
@@ -137,7 +149,7 @@ export const squaresSlice = createSlice({
 export const {
   generateBlankSquares,
   resetSquares,
-  shuffleMines,
+  deployMines,
   exposeMines,
   markNumber,
   markBlank,

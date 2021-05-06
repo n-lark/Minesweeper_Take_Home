@@ -13,11 +13,11 @@ type squareState = {
 };
 
 export const shuffleMineLocations = (
-  array: squareState[][],
-  row?: number,
-  index?: number
-): squareState[][] => {
-  const rowLength = array.length;
+  array: Array<Array<squareState>>,
+  rowCurrent: number,
+  columnCurrent: number,
+  basis: number
+): Array<Array<squareState>> => {
   const flatArray = array.flat(Infinity);
 
   let currentIndex = flatArray.length,
@@ -33,25 +33,20 @@ export const shuffleMineLocations = (
     flatArray[randomIndex] = temporaryValue;
   }
 
-  let nestedArray: squareState[][] = [];
-
+  let nestedArray: Array<Array<squareState>> = [];
   // FOR SHAME USING ANY FIX THIS SHIT
-  let tempArray: any[] = [];
-  flatArray.forEach((ele) => {
-    console.log("type issue here", ele);
-    tempArray.push(ele);
-    if (tempArray.length === rowLength) {
+  let tempArray: any = [];
+
+  flatArray.forEach((singleSquare) => {
+    tempArray.push(singleSquare);
+    if (tempArray.length === basis) {
       nestedArray.push(tempArray);
       tempArray = [];
     }
   });
 
-  if (
-    row !== undefined &&
-    index !== undefined &&
-    nestedArray[row][index].mine.isMine
-  ) {
-    return shuffleMineLocations(nestedArray, row, index);
+  if (nestedArray[rowCurrent][columnCurrent].mine.isMine) {
+    return shuffleMineLocations(nestedArray, rowCurrent, columnCurrent, basis);
   }
 
   return nestedArray;
