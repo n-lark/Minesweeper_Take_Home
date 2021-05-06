@@ -122,6 +122,9 @@ export const Grid: React.FC = () => {
                       dispatch(incrementFlags());
                     }
                   }
+                  if (squares[row][i].flag && !e.altKey) {
+                    return null;
+                  }
                   if (!e.altKey) {
                     uncoverSquare(row, i);
                   }

@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "./app/hooks";
-import { useAppSelector } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { startTimer } from "./features/timerSlice";
 import { determineFlags } from "./features/flagsSlice";
 import { generateBlankSquares } from "./features/squaresSlice";
+import { showModal } from "./features/rulesModalSlice";
 import { Grid } from "./Grid";
 import { Timer } from "./Timer";
 import { Flags } from "./Flags";
+import { RulesModal } from "./RulesModal";
 
 export const Game: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ export const Game: React.FC = () => {
   const { squaresNum, basis } = useAppSelector(
     (state) => state.numOfSquares.value
   );
+  const modalControl = useAppSelector((state) => state.rulesModal.value);
   const numOfFlags = Math.floor(basis * basis * 0.15 + 1);
 
   // useEffect(() => {
@@ -35,6 +37,7 @@ export const Game: React.FC = () => {
 
   return (
     <StyledWrapper>
+      {modalControl && <RulesModal />}
       <Timer />
       <Flags />
       {gameOver && <StyledGameOver>Game Over</StyledGameOver>}
@@ -42,9 +45,25 @@ export const Game: React.FC = () => {
       <StyledLink to="./GameEnd">
         <StyledButton>End Game</StyledButton>
       </StyledLink>
+      <StyledRulesButton onClick={() => dispatch(showModal())}>
+        How to play
+      </StyledRulesButton>
     </StyledWrapper>
   );
 };
+
+const StyledRulesButton = styled.button`
+  color: grey;
+  outline: none;
+  border-radius: 10px;
+  border: none;
+  align-self: flex-end;
+  padding: 5px;
+  background-color: transparent;
+  margin: 10px;
+  font-size: 16px;
+  font-family: "Work Sans", sans-serif;
+`;
 
 const StyledGameOver = styled.div`
   color: grey;
@@ -61,7 +80,8 @@ const StyledWrapper = styled.div`
   box-shadow: 10px 5px 5px lightgray;
   margin: 10px;
   width: 700px;
-  height: 500px;
+  height: 600px;
+  font-family: "Work Sans", sans-serif;
 `;
 
 const StyledLink = styled(Link)`

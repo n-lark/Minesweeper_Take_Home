@@ -1,23 +1,28 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useAppDispatch } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { resetTimer } from "./features/timerSlice";
 import { resetSquares } from "./features/squaresSlice";
 import { resetEndGame } from "./features/gameOverSlice";
+import { resetFlags } from "./features/flagsSlice";
+import { showModal } from "./features/rulesModalSlice";
 import {
   resetNumOfSquares,
   setNumOfSquares,
 } from "./features/numOfSquaresSlice";
+import { RulesModal } from "./RulesModal";
 
 export const GameStart: React.FC = () => {
   const dispatch = useAppDispatch();
+  const modalControl = useAppSelector((state) => state.rulesModal.value);
 
   useEffect(() => {
     dispatch(resetTimer());
     dispatch(resetSquares());
     dispatch(resetNumOfSquares());
     dispatch(resetEndGame());
+    dispatch(resetFlags());
   }, [dispatch]);
 
   return (
@@ -62,9 +67,26 @@ export const GameStart: React.FC = () => {
       <StyledLink to="./Game">
         <StyledButton>Play Game</StyledButton>
       </StyledLink>
+      {modalControl && <RulesModal />}
+      <StyledRulesButton onClick={() => dispatch(showModal())}>
+        How to play
+      </StyledRulesButton>
     </StyledWrapper>
   );
 };
+
+const StyledRulesButton = styled.button`
+  color: grey;
+  outline: none;
+  border-radius: 10px;
+  border: none;
+  align-self: flex-end;
+  padding: 5px;
+  background-color: transparent;
+  margin: 10px;
+  font-size: 16px;
+  font-family: "Work Sans", sans-serif;
+`;
 
 const StyledLabel = styled.div`
   color: grey;
@@ -94,15 +116,16 @@ const StyledWrapper = styled.div`
   box-shadow: 10px 5px 5px lightgray;
   margin: 10px;
   width: 700px;
-  height: 500px;
+  height: 600px;
   font-family: "Work Sans", sans-serif;
 `;
 
 const StyledHeading = styled.h1`
-  font-size: 42px;
+  font-size: 44px;
   font-weight: normal;
   margin-top: 50px;
   color: gray;
+  padding: 30px;
 `;
 
 const StyledButton = styled.button`

@@ -36,7 +36,7 @@ const StyledWrapper = styled.div`
   box-shadow: 10px 5px 5px lightgray;
   margin: 10px;
   width: 700px;
-  height: 500px;
+  height: 600px;
   font-family: "Work Sans", sans-serif;
 `;
 
