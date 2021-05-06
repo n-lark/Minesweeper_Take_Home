@@ -76,32 +76,23 @@ export const Grid: React.FC = () => {
     if (gameOver) {
       return null;
     }
-    if (firstClick) {
+    if (squares[rowCurrent][columnCurrent].mine.isMine && firstClick) {
       setFirstClick(false);
-      if (squares[rowCurrent][columnCurrent].mine.isMine) {
-        dispatch(shuffleMines({ rowCurrent, columnCurrent }));
-      }
-      if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
-        dispatch(markNumber({ rowCurrent, columnCurrent }));
-      }
-      if (generateNumber(rowCurrent, columnCurrent, squares) === 0) {
-        dispatch(markBlank({ rowCurrent, columnCurrent }));
-        return expandSquares(rowCurrent, columnCurrent, squares);
-      }
+      dispatch(shuffleMines({ rowCurrent, columnCurrent }));
     }
-
-    if (!firstClick) {
-      if (squares[rowCurrent][columnCurrent].mine.isMine === true) {
-        dispatch(endGame());
-        return dispatch(exposeMines());
-      }
-      if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
-        dispatch(markNumber({ rowCurrent, columnCurrent }));
-      }
-      if (generateNumber(rowCurrent, columnCurrent, squares) === 0) {
-        dispatch(markBlank({ rowCurrent, columnCurrent }));
-        return expandSquares(rowCurrent, columnCurrent, squares);
-      }
+    if (
+      squares[rowCurrent][columnCurrent].mine.isMine === true &&
+      !firstClick
+    ) {
+      dispatch(endGame());
+      return dispatch(exposeMines());
+    }
+    if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
+      dispatch(markNumber({ rowCurrent, columnCurrent }));
+    }
+    if (generateNumber(rowCurrent, columnCurrent, squares) === 0) {
+      dispatch(markBlank({ rowCurrent, columnCurrent }));
+      return expandSquares(rowCurrent, columnCurrent, squares);
     }
   };
 

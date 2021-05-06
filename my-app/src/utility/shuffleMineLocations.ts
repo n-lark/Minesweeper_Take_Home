@@ -38,6 +38,7 @@ export const shuffleMineLocations = (
   // FOR SHAME USING ANY FIX THIS SHIT
   let tempArray: any[] = [];
   flatArray.forEach((ele) => {
+    console.log("type issue here", ele);
     tempArray.push(ele);
     if (tempArray.length === rowLength) {
       nestedArray.push(tempArray);
