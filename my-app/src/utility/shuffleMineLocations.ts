@@ -1,23 +1,23 @@
 //Fisher-Yates (aka Knuth) Shuffle.
 
-type mineState = {
+type mineType = {
   show: boolean;
   isMine: boolean;
 };
 
-type squareState = {
+type squareType = {
   blank: boolean;
   flag: boolean;
-  mine: mineState;
+  mine: mineType;
   number: boolean;
 };
 
 export const shuffleMineLocations = (
-  array: Array<Array<squareState>>,
+  array: Array<Array<squareType>>,
   rowCurrent: number,
   columnCurrent: number,
   basis: number
-): Array<Array<squareState>> => {
+): Array<Array<squareType>> => {
   const flatArray = array.flat(Infinity);
 
   let currentIndex = flatArray.length,
@@ -33,7 +33,7 @@ export const shuffleMineLocations = (
     flatArray[randomIndex] = temporaryValue;
   }
 
-  let nestedArray: Array<Array<squareState>> = [];
+  let nestedArray: Array<Array<squareType>> = [];
   // FOR SHAME USING ANY FIX THIS SHIT
   let tempArray: any = [];
 

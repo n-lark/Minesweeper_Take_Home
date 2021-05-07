@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../app/store";
 
-interface timerInitialState {
+type timerInitialState = {
   value: number;
-}
+};
 
 const initialState: timerInitialState = {
   value: 0,
@@ -13,10 +13,10 @@ export const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
-    startTimer: (state) => {
+    startTimer: (state: timerInitialState) => {
       state.value += 1;
     },
-    resetTimer: (state) => {
+    resetTimer: (state: timerInitialState) => {
       state.value = 0;
     },
   },

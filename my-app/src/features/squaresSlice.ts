@@ -15,20 +15,63 @@ type squareState = {
 };
 
 type squaresInitialState = {
-  value: squareState[][];
+  value: Array<Array<squareState>>;
 };
 
 const initialState = {
   value: [],
 } as squaresInitialState;
 
+type blankSquaresPayloadType = {
+  squaresNum: number;
+  basis: number;
+};
+
+type blankSquaresActionType = {
+  payload: blankSquaresPayloadType;
+  type: string;
+};
+
+type deployMinesPayloadType = {
+  squaresNum: number;
+  rowCurrent: number;
+  columnCurrent: number;
+  basis: number;
+};
+
+type deployMinesActionType = {
+  payload: deployMinesPayloadType;
+  type: string;
+};
+
+type markNumberOrBlankPayloadType = {
+  rowCurrent: number;
+  columnCurrent: number;
+};
+
+type markNumberOrBlankActionType = {
+  payload: markNumberOrBlankPayloadType;
+  type: string;
+};
+
+type flagOrUnflagMinePayloadType = {
+  row: number;
+  i: number;
+};
+
+type flagOrUnflagMineActionType = {
+  payload: flagOrUnflagMinePayloadType;
+  type: string;
+};
+
 export const squaresSlice = createSlice({
   name: "squares",
   initialState,
   reducers: {
-    //: WritableDraft<squaresInitialState> import type state
-    // type action payload can be any, look this up
-    generateBlankSquares: (state, action) => {
+    generateBlankSquares: (
+      state: squaresInitialState,
+      action: blankSquaresActionType
+    ) => {
       const squaresArray = [];
       let nestedArray = [];
       for (let i = 0; i < action.payload.squaresNum; i++) {
@@ -45,7 +88,10 @@ export const squaresSlice = createSlice({
       }
       state.value.push(...squaresArray);
     },
-    deployMines: (state, action) => {
+    deployMines: (
+      state: squaresInitialState,
+      action: deployMinesActionType
+    ) => {
       const flatArray = state.value.flat(Infinity);
       const nestedArray: Array<Array<squareState>> = [];
       let tempArray: Array<squareState> = [];
@@ -74,7 +120,7 @@ export const squaresSlice = createSlice({
 
       state.value = shuffledSquares;
     },
-    exposeMines: (state) => {
+    exposeMines: (state: squaresInitialState) => {
       const minesExposed = state.value.map((square) => {
         return square.map((piece) => {
           if (piece.mine.isMine) {
@@ -86,7 +132,10 @@ export const squaresSlice = createSlice({
       });
       state.value = minesExposed;
     },
-    markNumber: (state, action) => {
+    markNumber: (
+      state: squaresInitialState,
+      action: markNumberOrBlankActionType
+    ) => {
       const numberSquares = state.value.map((square) => {
         return square.map((piece) => {
           if (
@@ -101,7 +150,10 @@ export const squaresSlice = createSlice({
       });
       state.value = numberSquares;
     },
-    markBlank: (state, action) => {
+    markBlank: (
+      state: squaresInitialState,
+      action: markNumberOrBlankActionType
+    ) => {
       const blankSquares = state.value.map((square) => {
         return square.map((piece) => {
           if (
@@ -116,7 +168,10 @@ export const squaresSlice = createSlice({
       });
       state.value = blankSquares;
     },
-    flagMine: (state, action) => {
+    flagMine: (
+      state: squaresInitialState,
+      action: flagOrUnflagMineActionType
+    ) => {
       const flagSquares = state.value.map((square) => {
         return square.map((piece) => {
           if (state.value[action.payload.row][action.payload.i] === piece) {
@@ -129,7 +184,10 @@ export const squaresSlice = createSlice({
       });
       state.value = flagSquares;
     },
-    unFlagMine: (state, action) => {
+    unFlagMine: (
+      state: squaresInitialState,
+      action: flagOrUnflagMineActionType
+    ) => {
       const unflagSquares = state.value.map((square) => {
         return square.map((piece) => {
           if (state.value[action.payload.row][action.payload.i] === piece) {
@@ -140,7 +198,7 @@ export const squaresSlice = createSlice({
       });
       state.value = unflagSquares;
     },
-    resetSquares: (state) => {
+    resetSquares: (state: squaresInitialState) => {
       state.value = [];
     },
   },

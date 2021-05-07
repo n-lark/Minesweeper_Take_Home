@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../app/store";
 
-interface gameOverInitialState {
+type gameOverInitialState = {
   value: boolean;
-}
+};
 
 const initialState: gameOverInitialState = {
   value: false,
@@ -13,10 +13,10 @@ export const gameOverSlice = createSlice({
   name: "gameOver",
   initialState,
   reducers: {
-    endGame: (state) => {
+    endGame: (state: gameOverInitialState) => {
       state.value = true;
     },
-    resetEndGame: (state) => {
+    resetEndGame: (state: gameOverInitialState) => {
       state.value = false;
     },
   },
