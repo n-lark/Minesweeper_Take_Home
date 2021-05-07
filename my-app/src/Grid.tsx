@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faBomb, faFlag, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "./app/hooks";
 import { useAppDispatch } from "./app/hooks";
 import {
@@ -112,7 +112,7 @@ export const Grid: React.FC = () => {
                 key={i}
                 id={`square${row}${i}`}
                 onClick={(e) => {
-                  if (e.altKey) {
+                  if (e.altKey && !firstClick) {
                     if (!squares[row][i].flag) {
                       dispatch(flagMine({ row, i }));
                       dispatch(decrementFlags());
@@ -138,9 +138,17 @@ export const Grid: React.FC = () => {
               >
                 {piece.mine.show && <FontAwesomeIcon icon={faBomb} />}
                 {piece.mine.isMine && <StyledMineSpan />}
-                {piece.flag && <FontAwesomeIcon icon={faFlag} />}
-                {piece.number && generateNumber(row, i, squares)}
-                {piece.blank && <StyledBlankSpan />}
+                {piece.flag && (
+                  <FontAwesomeIcon
+                    icon={
+                      piece.flag && !piece.mine.isMine && gameOver
+                        ? faTimes
+                        : faFlag
+                    }
+                  />
+                )}
+                {piece.number && !piece.flag && generateNumber(row, i, squares)}
+                {piece.blank && !piece.flag && <StyledBlankSpan />}
               </StyledDiv>
             );
           });
