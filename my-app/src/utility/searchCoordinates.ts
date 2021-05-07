@@ -1,4 +1,7 @@
-export const searchCoordinates = (array: number[][], coordinates: number[]) => {
+export const searchCoordinates = (
+  array: Array<Array<number>>,
+  coordinates: Array<number>
+) => {
   let found = false;
 
   for (let i = 0; i < array.length; i++) {

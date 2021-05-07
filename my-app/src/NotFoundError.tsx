@@ -17,6 +17,7 @@ const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-flow: column;
+  color: grey;
   border: 1px solid lightgray;
   box-shadow: 10px 5px 5px lightgray;
   margin: 10px;
@@ -34,7 +35,7 @@ const StyledButton = styled.button`
   color: gray;
   font-size: 20px;
   padding: 10px 16px;
-  border: 1px solid gray;
+  border: 1px solid lightgray;
   background-color: white;
   border-radius: 8px;
   outline: none;
