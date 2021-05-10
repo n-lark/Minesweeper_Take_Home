@@ -7,6 +7,7 @@ import { resetSquares } from "./features/squaresSlice";
 import { resetEndGame } from "./features/gameOverSlice";
 import { resetFlags } from "./features/flagsSlice";
 import { showModal } from "./features/rulesModalSlice";
+import { resetGameWon } from "./features/gameWonSlice";
 import {
   resetNumOfSquares,
   setNumOfSquares,
@@ -23,6 +24,7 @@ export const GameStart: React.FC = () => {
     dispatch(resetNumOfSquares());
     dispatch(resetEndGame());
     dispatch(resetFlags());
+    dispatch(resetGameWon());
   }, [dispatch]);
 
   return (

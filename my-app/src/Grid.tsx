@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +16,8 @@ import { incrementFlags, decrementFlags } from "./features/flagsSlice";
 import { endGame } from "./features/gameOverSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
+import { isGameWon } from "./utility/isGameWon";
+import { setGameWon } from "./features/gameWonSlice";
 
 type gridContainer = {
   rowLength: number;
@@ -40,8 +42,19 @@ export const Grid: React.FC = () => {
     (state) => state.numOfSquares.value
   );
   const gameOver = useAppSelector((state) => state.gameOver.value);
+  const gameIsWon = useAppSelector((state) => state.gameWon.value);
   const dispatch = useAppDispatch();
   const checkedCoordinates = [];
+
+  useEffect(() => {
+    if (gameIsWon) {
+      return null;
+    }
+    if (isGameWon(squares) && !firstClick) {
+      dispatch(setGameWon());
+      dispatch(exposeMines());
+    }
+  }, [squares, dispatch, gameIsWon, firstClick]);
 
   const expandSquares = (
     row: number,
@@ -62,13 +75,17 @@ export const Grid: React.FC = () => {
       ) {
         if (
           generateNumber(rowCurrent, columnCurrent, squares) === 0 &&
-          !searchCoordinates(checkedCoordinates, [rowCurrent, columnCurrent])
+          !searchCoordinates(checkedCoordinates, [rowCurrent, columnCurrent]) &&
+          !squares[rowCurrent][columnCurrent].flag
         ) {
           dispatch(markBlank({ rowCurrent, columnCurrent }));
           checkedCoordinates.push([rowCurrent, columnCurrent]);
           return expandSquares(rowCurrent, columnCurrent, squares);
         }
-        if (generateNumber(rowCurrent, columnCurrent, squares) > 0) {
+        if (
+          generateNumber(rowCurrent, columnCurrent, squares) > 0 &&
+          !squares[rowCurrent][columnCurrent].flag
+        ) {
           dispatch(markNumber({ rowCurrent, columnCurrent }));
         }
       }
@@ -98,7 +115,8 @@ export const Grid: React.FC = () => {
       !firstClick
     ) {
       dispatch(markBlank({ rowCurrent, columnCurrent }));
-      return expandSquares(rowCurrent, columnCurrent, squares);
+      // Changed this, could cause bugs, was return expand squares
+      expandSquares(rowCurrent, columnCurrent, squares);
     }
   };
 

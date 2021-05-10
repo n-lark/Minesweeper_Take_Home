@@ -18,6 +18,7 @@ export const Game: React.FC = () => {
     (state) => state.numOfSquares.value
   );
   const modalControl = useAppSelector((state) => state.rulesModal.value);
+  const gameIsWon = useAppSelector((state) => state.gameWon.value);
   const numOfFlags = Math.floor(basis * basis * 0.15 + 1);
 
   // useEffect(() => {
@@ -40,7 +41,8 @@ export const Game: React.FC = () => {
       {modalControl && <RulesModal />}
       <Timer />
       <Flags />
-      {gameOver && <StyledGameOver>Game Over</StyledGameOver>}
+      {gameOver && <StyledGameVerdict>Game Over</StyledGameVerdict>}
+      {gameIsWon && <StyledGameVerdict>Winner!</StyledGameVerdict>}
       <Grid />
       <StyledLink to="./GameEnd">
         <StyledButton>End Game</StyledButton>
@@ -51,6 +53,13 @@ export const Game: React.FC = () => {
     </StyledWrapper>
   );
 };
+
+const StyledGameVerdict = styled.div`
+  color: grey;
+  font-size: 36px;
+  position: fixed;
+  margin-top: 15px;
+`;
 
 const StyledRulesButton = styled.button`
   color: grey;
@@ -63,13 +72,6 @@ const StyledRulesButton = styled.button`
   margin: 10px;
   font-size: 16px;
   font-family: "Work Sans", sans-serif;
-`;
-
-const StyledGameOver = styled.div`
-  color: grey;
-  font-size: 26px;
-  position: fixed;
-  margin-top: 15px;
 `;
 
 const StyledWrapper = styled.div`
