@@ -27,17 +27,17 @@ export const GameEnd: React.FC = () => {
             <StyledIcon time={4}>
               <FontAwesomeIcon icon={faFlag} />
             </StyledIcon>
-            <StyledIcon time={3}>
+            <StyledIcon time={3.5}>
               <FontAwesomeIcon icon={faBomb} />
             </StyledIcon>
             <StyledIcon time={4}>1</StyledIcon>
             <StyledIcon time={3}>
               <FontAwesomeIcon icon={faBomb} />
             </StyledIcon>
-            <StyledIcon time={5}>
+            <StyledIcon time={6}>
               <FontAwesomeIcon icon={faTimes} />
             </StyledIcon>
-            <StyledIcon time={4}>
+            <StyledIcon time={4.2}>
               <FontAwesomeIcon icon={faFlag} />
             </StyledIcon>
             <StyledIcon time={5}>2</StyledIcon>
@@ -72,11 +72,11 @@ const StyledIcon = styled.span<iconContainer>`
   padding: 5px;
   font-size: 22px;
   font-weight: bold;
-  animation: ${Bombs} ${(p) => p.time}s linear infinite;
+  animation: ${Bombs} ${({ time }) => time}s linear infinite;
 `;
 
 const StyledButton = styled.button`
-  color: gray;
+  color: #595959;
   font-size: 20px;
   padding: 10px 16px;
   border: 1px solid lightgray;
@@ -96,7 +96,7 @@ const StyledWrapper = styled.div`
   width: 700px;
   height: 600px;
   font-family: "Work Sans", sans-serif;
-  color: grey;
+  color: #595959;
 `;
 
 const StyledLink = styled(Link)`

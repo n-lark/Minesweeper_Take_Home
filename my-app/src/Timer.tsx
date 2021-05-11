@@ -13,8 +13,8 @@ export { Timer };
 
 const StyledDiv = styled.div`
   align-self: flex-end;
-  padding: 20px 20px 0px 0px;
-  color: grey;
+  padding: 20px 20px 10px 0px;
+  color: #595959;
   width: 75px;
   font-size: 18px;
 `;

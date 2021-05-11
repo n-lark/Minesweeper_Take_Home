@@ -13,7 +13,7 @@ import { RulesModal } from "./RulesModal";
 
 export const Game: React.FC = () => {
   const dispatch = useAppDispatch();
-  const gameOver = useAppSelector((state) => state.gameOver.value);
+  const gameLost = useAppSelector((state) => state.gameLost.value);
   const { squaresNum, basis } = useAppSelector(
     (state) => state.numOfSquares.value
   );
@@ -39,10 +39,12 @@ export const Game: React.FC = () => {
   return (
     <StyledWrapper>
       {modalControl && <RulesModal />}
-      <Timer />
-      <Flags />
-      {gameOver && <StyledGameVerdict>Game Over</StyledGameVerdict>}
-      {gameIsWon && <StyledGameVerdict>Winner!</StyledGameVerdict>}
+      <StyledHeaderWrapper>
+        <Flags />
+        <Timer />
+      </StyledHeaderWrapper>
+      {gameIsWon && <StyledGameVerdict>You won!</StyledGameVerdict>}
+      {gameLost && <StyledGameVerdict>Game Over</StyledGameVerdict>}
       <Grid />
       <StyledLink to="./GameEnd">
         <StyledButton>End Game</StyledButton>
@@ -54,15 +56,22 @@ export const Game: React.FC = () => {
   );
 };
 
+const StyledHeaderWrapper = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+`;
+
 const StyledGameVerdict = styled.div`
-  color: grey;
+  color: #595959;
   font-size: 36px;
   position: fixed;
   margin-top: 15px;
 `;
 
 const StyledRulesButton = styled.button`
-  color: grey;
+  color: #595959;
   outline: none;
   border-radius: 10px;
   border: none;
@@ -92,10 +101,10 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledButton = styled.button`
-  color: gray;
+  color: #595959;
   font-size: 20px;
   padding: 10px 16px;
-  border: 1px solid lightgray;
+  border: 1px solid lightgrey;
   background-color: white;
   border-radius: 8px;
   outline: none;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { resetTimer } from "./features/timerSlice";
 import { resetSquares } from "./features/squaresSlice";
-import { resetEndGame } from "./features/gameOverSlice";
+import { resetEndGame } from "./features/gameLostSlice";
 import { resetFlags } from "./features/flagsSlice";
 import { showModal } from "./features/rulesModalSlice";
 import { resetGameWon } from "./features/gameWonSlice";
@@ -30,7 +30,6 @@ export const GameStart: React.FC = () => {
   return (
     <StyledWrapper>
       <StyledHeading>Minesweeper</StyledHeading>
-      <StyledQuestion>Choose your level</StyledQuestion>
       <StyledRadioWrapper>
         <StyledLabel>
           <StyledInput
@@ -78,7 +77,7 @@ export const GameStart: React.FC = () => {
 };
 
 const StyledRulesButton = styled.button`
-  color: grey;
+  color: #595959;
   outline: none;
   border-radius: 10px;
   border: none;
@@ -91,7 +90,7 @@ const StyledRulesButton = styled.button`
 `;
 
 const StyledLabel = styled.div`
-  color: grey;
+  color: #595959;
   padding: 5px;
   font-size: 18px;
 `;
@@ -126,12 +125,6 @@ const StyledInput = styled.input`
       }
 `;
 
-const StyledQuestion = styled.span`
-  color: lightgrey;
-  font-weight: bold;
-  font-size: 18px;
-`;
-
 const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -145,15 +138,15 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledHeading = styled.h1`
-  font-size: 44px;
+  font-size: 46px;
   font-weight: normal;
   margin-top: 50px;
-  color: gray;
+  color: #595959;
   padding: 30px;
 `;
 
 const StyledButton = styled.button`
-  color: gray;
+  color: #595959;
   font-size: 20px;
   padding: 10px 16px;
   border: 1px solid lightgray;
