@@ -13,7 +13,7 @@ import {
   unFlagMine,
 } from "./features/squaresSlice";
 import { incrementFlags, decrementFlags } from "./features/flagsSlice";
-import { endGame } from "./features/gameLostSlice";
+import { gameIsLost } from "./features/gameLostSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
 import { isGameWon } from "./utility/isGameWon";
@@ -45,21 +45,21 @@ export const Grid: React.FC = () => {
     (state) => state.numOfSquares.value
   );
   const gameLost = useAppSelector((state) => state.gameLost.value);
-  const gameIsWon = useAppSelector((state) => state.gameWon.value);
+  const gameWon = useAppSelector((state) => state.gameWon.value);
   const dispatch = useAppDispatch();
-  const checkedCoordinates = [];
+  const checkedCoordinates: Array<Array<number>> = [];
 
   console.log(firstClickCoordinates);
 
   useEffect(() => {
-    if (gameIsWon) {
+    if (gameWon) {
       return null;
     }
     if (isGameWon(squares) && !firstClick) {
       dispatch(setGameWon());
       dispatch(exposeMines());
     }
-  }, [squares, dispatch, gameIsWon, firstClick]);
+  }, [squares, dispatch, gameWon, firstClick]);
 
   const expandSquares = (
     row: number,
@@ -106,11 +106,14 @@ export const Grid: React.FC = () => {
       setFirstClickCoordinates([rowCurrent, columnCurrent]);
       setFirstClick(false);
     }
+    if (!firstClick) {
+      setFirstClickCoordinates([]);
+    }
     if (
       squares[rowCurrent][columnCurrent].mine.isMine === true &&
       !firstClick
     ) {
-      dispatch(endGame());
+      dispatch(gameIsLost());
       return dispatch(exposeMines());
     }
     if (generateNumber(rowCurrent, columnCurrent, squares) > 0 && !firstClick) {
@@ -125,6 +128,10 @@ export const Grid: React.FC = () => {
     }
   };
 
+  if (firstClickCoordinates.length === 2) {
+    uncoverSquare(firstClickCoordinates[0], firstClickCoordinates[1]);
+  }
+
   return (
     <StyledWrapper>
       <StyledGrid rowLength={basis}>
@@ -133,7 +140,6 @@ export const Grid: React.FC = () => {
             return (
               <StyledDiv
                 key={i}
-                id={`square${row}${i}`}
                 onClick={(e) => {
                   if (e.shiftKey && !firstClick) {
                     if (!squares[row][i].flag) {
