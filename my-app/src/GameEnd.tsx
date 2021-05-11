@@ -51,7 +51,7 @@ export const GameEnd: React.FC = () => {
         </>
       )}
       <StyledLink to="./">
-        <StyledButton>Play Again</StyledButton>
+        <StyledButton data-cy="play-again">Play Again</StyledButton>
       </StyledLink>
     </StyledWrapper>
   );

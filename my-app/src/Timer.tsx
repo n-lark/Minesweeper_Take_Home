@@ -6,7 +6,7 @@ import { formatTime } from "./utility/formatTime";
 const Timer: React.FC = () => {
   const time = useAppSelector((state) => state.timer.value);
 
-  return <StyledDiv>{formatTime(time)}</StyledDiv>;
+  return <StyledDiv data-cy="timer">{formatTime(time)}</StyledDiv>;
 };
 
 export { Timer };

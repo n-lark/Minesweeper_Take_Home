@@ -66,7 +66,7 @@ export const GameStart: React.FC = () => {
         </StyledLabel>
       </StyledRadioWrapper>
       <StyledLink to="./Game">
-        <StyledButton>Play Game</StyledButton>
+        <StyledButton data-cy="start-game">Play Game</StyledButton>
       </StyledLink>
       {modalControl && <RulesModal />}
       <StyledRulesButton onClick={() => dispatch(showModal())}>

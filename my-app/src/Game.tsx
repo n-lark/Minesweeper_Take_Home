@@ -21,15 +21,19 @@ export const Game: React.FC = () => {
   const gameIsWon = useAppSelector((state) => state.gameWon.value);
   const numOfFlags = Math.floor(basis * basis * 0.15 + 1);
 
-  // useEffect(() => {
-  //   const gameTimer = setInterval(() => {
-  //     dispatch(startTimer());
-  //   }, 1000);
+  useEffect(() => {
+    const gameTimer = setInterval(() => {
+      dispatch(startTimer());
+    }, 1000);
 
-  //   return () => {
-  //     clearInterval(gameTimer);
-  //   };
-  // }, [dispatch]);
+    if (gameLost || gameIsWon) {
+      clearInterval(gameTimer);
+    }
+
+    return () => {
+      clearInterval(gameTimer);
+    };
+  }, [dispatch, gameLost, gameIsWon]);
 
   useEffect(() => {
     dispatch(generateBlankSquares({ squaresNum, basis }));
@@ -47,7 +51,7 @@ export const Game: React.FC = () => {
       {gameLost && <StyledGameVerdict>Game Over</StyledGameVerdict>}
       <Grid />
       <StyledLink to="./GameEnd">
-        <StyledButton>End Game</StyledButton>
+        <StyledButton data-cy="end-game">End Game</StyledButton>
       </StyledLink>
       <StyledRulesButton onClick={() => dispatch(showModal())}>
         How to play
