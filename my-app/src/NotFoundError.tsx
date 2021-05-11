@@ -16,7 +16,9 @@ type IconContainer = {
 export const NotFoundError: React.FC = () => {
   return (
     <StyledWrapper>
-      <StyledDiv>Oops! Something weird happened.</StyledDiv>
+      <StyledDiv data-cy="error-message">
+        Oops! Something weird happened.
+      </StyledDiv>
       <StyledIconWrapper>
         <StyledIcon time={5}>
           <FontAwesomeIcon icon={faBomb} />
@@ -40,7 +42,7 @@ export const NotFoundError: React.FC = () => {
         </StyledIcon>
       </StyledIconWrapper>
       <StyledLink to="./">
-        <StyledButton>Restart Game</StyledButton>
+        <StyledButton data-cy="restart-game">Restart Game</StyledButton>
       </StyledLink>
     </StyledWrapper>
   );
