@@ -49,8 +49,6 @@ export const Grid: React.FC = () => {
   const dispatch = useAppDispatch();
   const checkedCoordinates: Array<Array<number>> = [];
 
-  console.log(firstClickCoordinates);
-
   useEffect(() => {
     if (gameWon) {
       return null;

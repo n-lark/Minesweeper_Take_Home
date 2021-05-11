@@ -76,7 +76,7 @@ const StyledRulesButton = styled.button`
   border-radius: 10px;
   border: none;
   align-self: flex-end;
-  padding: 5px;
+  padding: 10px;
   background-color: transparent;
   margin: 10px;
   font-size: 18px;
