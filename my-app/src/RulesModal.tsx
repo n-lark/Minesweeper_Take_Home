@@ -20,7 +20,7 @@ const RulesModal: React.FC = () => {
       <StyledModalContainer>
         <StyledModalHeading>How to play</StyledModalHeading>
         <StyledModalRulesList>
-          <StyledModalRulesLi>
+          <StyledModalRulesLi data-cy="modal-content">
             The goal of minesweeper is to open all cells that do not contain a
             mine. The game will end if a cell that contains a mine is opened. A
             cell is opened by clicking on it. The first click of the game cannot

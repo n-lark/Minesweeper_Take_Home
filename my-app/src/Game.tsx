@@ -53,7 +53,10 @@ export const Game: React.FC = () => {
       <StyledLink to="./GameEnd">
         <StyledButton data-cy="end-game">End Game</StyledButton>
       </StyledLink>
-      <StyledRulesButton onClick={() => dispatch(showModal())}>
+      <StyledRulesButton
+        data-cy="rulesModalAtGame"
+        onClick={() => dispatch(showModal())}
+      >
         How to play
       </StyledRulesButton>
     </StyledWrapper>

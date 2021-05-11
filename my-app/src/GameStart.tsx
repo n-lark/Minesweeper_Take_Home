@@ -55,6 +55,7 @@ export const GameStart: React.FC = () => {
         </StyledLabel>
         <StyledLabel>
           <StyledInput
+            data-cy="chose-level-hard"
             value="hard"
             type="radio"
             name="level"
@@ -69,7 +70,10 @@ export const GameStart: React.FC = () => {
         <StyledButton data-cy="start-game">Play Game</StyledButton>
       </StyledLink>
       {modalControl && <RulesModal />}
-      <StyledRulesButton onClick={() => dispatch(showModal())}>
+      <StyledRulesButton
+        data-cy="rulesModal"
+        onClick={() => dispatch(showModal())}
+      >
         How to play
       </StyledRulesButton>
     </StyledWrapper>
