@@ -21,20 +21,21 @@ export const shuffleMineLocations = (
   const flatArray = array.flat(Infinity);
 
   let currentIndex = flatArray.length,
-    temporaryValue,
-    randomIndex;
+    // type this one too
+    temporaryValue: any,
+    randomIndex: number;
 
   while (0 !== currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-
     temporaryValue = flatArray[currentIndex];
     flatArray[currentIndex] = flatArray[randomIndex];
     flatArray[randomIndex] = temporaryValue;
   }
 
   let nestedArray: Array<Array<squareType>> = [];
-  // FOR SHAME USING ANY FIX THIS SHIT
+
+  // Need to fix any type
   let tempArray: any = [];
 
   flatArray.forEach((singleSquare) => {

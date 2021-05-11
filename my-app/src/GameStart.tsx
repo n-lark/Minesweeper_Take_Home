@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { resetTimer } from "./features/timerSlice";
 import { resetSquares } from "./features/squaresSlice";
-import { resetEndGame } from "./features/gameLostSlice";
 import { resetFlags } from "./features/flagsSlice";
 import { showModal } from "./features/rulesModalSlice";
 import { resetGameWon } from "./features/gameWonSlice";
+import { resetGameLost } from "./features/gameLostSlice";
 import {
   resetNumOfSquares,
   setNumOfSquares,
@@ -22,9 +22,9 @@ export const GameStart: React.FC = () => {
     dispatch(resetTimer());
     dispatch(resetSquares());
     dispatch(resetNumOfSquares());
-    dispatch(resetEndGame());
     dispatch(resetFlags());
     dispatch(resetGameWon());
+    dispatch(resetGameLost());
   }, [dispatch]);
 
   return (

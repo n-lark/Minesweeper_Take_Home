@@ -13,16 +13,16 @@ export const gameLostSlice = createSlice({
   name: "gameLost",
   initialState,
   reducers: {
-    endGame: (state: gameLostInitialState) => {
+    gameIsLost: (state: gameLostInitialState) => {
       state.value = true;
     },
-    resetEndGame: (state: gameLostInitialState) => {
+    resetGameLost: (state: gameLostInitialState) => {
       state.value = false;
     },
   },
 });
 
-export const { endGame, resetEndGame } = gameLostSlice.actions;
+export const { gameIsLost, resetGameLost } = gameLostSlice.actions;
 
 export const selectTimer = (state: RootState) => state.gameLost.value;
 
