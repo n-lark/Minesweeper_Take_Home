@@ -13,7 +13,7 @@ import {
   unFlagMine,
 } from "./features/squaresSlice";
 import { incrementFlags, decrementFlags } from "./features/flagsSlice";
-import { endGame } from "./features/gameOverSlice";
+import { endGame } from "./features/gameLostSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
 import { isGameWon } from "./utility/isGameWon";
@@ -37,14 +37,19 @@ type squareState = {
 
 export const Grid: React.FC = () => {
   const [firstClick, setFirstClick] = useState<boolean>(true);
+  const [firstClickCoordinates, setFirstClickCoordinates] = useState<
+    Array<number>
+  >([]);
   const squares = useAppSelector((state) => state.squares.value);
   const { squaresNum, basis } = useAppSelector(
     (state) => state.numOfSquares.value
   );
-  const gameOver = useAppSelector((state) => state.gameOver.value);
+  const gameLost = useAppSelector((state) => state.gameLost.value);
   const gameIsWon = useAppSelector((state) => state.gameWon.value);
   const dispatch = useAppDispatch();
   const checkedCoordinates = [];
+
+  console.log(firstClickCoordinates);
 
   useEffect(() => {
     if (gameIsWon) {
@@ -59,7 +64,7 @@ export const Grid: React.FC = () => {
   const expandSquares = (
     row: number,
     column: number,
-    squares: squareState[][]
+    squares: Array<Array<squareState>>
   ) => {
     const x = [-1, -1, -1, 0, 0, 1, 1, 1];
     const y = [-1, 0, 1, -1, 1, -1, 0, 1];
@@ -93,11 +98,12 @@ export const Grid: React.FC = () => {
   };
 
   const uncoverSquare = (rowCurrent: number, columnCurrent: number) => {
-    if (gameOver) {
+    if (gameLost) {
       return null;
     }
     if (firstClick) {
       dispatch(deployMines({ squaresNum, basis, rowCurrent, columnCurrent }));
+      setFirstClickCoordinates([rowCurrent, columnCurrent]);
       setFirstClick(false);
     }
     if (
@@ -115,7 +121,6 @@ export const Grid: React.FC = () => {
       !firstClick
     ) {
       dispatch(markBlank({ rowCurrent, columnCurrent }));
-      // Changed this, could cause bugs, was return expand squares
       expandSquares(rowCurrent, columnCurrent, squares);
     }
   };
@@ -130,7 +135,7 @@ export const Grid: React.FC = () => {
                 key={i}
                 id={`square${row}${i}`}
                 onClick={(e) => {
-                  if (e.altKey && !firstClick) {
+                  if (e.shiftKey && !firstClick) {
                     if (!squares[row][i].flag) {
                       dispatch(flagMine({ row, i }));
                       dispatch(decrementFlags());
@@ -140,18 +145,12 @@ export const Grid: React.FC = () => {
                       dispatch(incrementFlags());
                     }
                   }
-                  if (squares[row][i].flag && !e.altKey) {
+                  if (squares[row][i].flag && !e.shiftKey) {
                     return null;
                   }
-                  if (!e.altKey) {
+                  if (!e.shiftKey) {
                     uncoverSquare(row, i);
                   }
-                  // if (firstClick) {
-                  //   let element: HTMLElement = document.getElementById(
-                  //     `square${row}${i}`
-                  //   ) as HTMLElement;
-                  //   element.click();
-                  // }
                 }}
               >
                 {piece.mine.show && <FontAwesomeIcon icon={faBomb} />}
@@ -159,7 +158,7 @@ export const Grid: React.FC = () => {
                 {piece.flag && (
                   <FontAwesomeIcon
                     icon={
-                      piece.flag && !piece.mine.isMine && gameOver
+                      piece.flag && !piece.mine.isMine && gameLost
                         ? faTimes
                         : faFlag
                     }
@@ -202,7 +201,8 @@ const StyledGrid = styled.div<gridContainer>`
 
 const StyledDiv = styled.div`
   border: 0.5px solid lightgrey;
-  color: grey;
+  color: #595959;
+  box-shadow: inset 1px 1px grey;
 `;
 
 const StyledWrapper = styled.div`
