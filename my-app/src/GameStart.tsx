@@ -86,13 +86,14 @@ const StyledRulesButton = styled.button`
   padding: 5px;
   background-color: transparent;
   margin: 10px;
-  font-size: 16px;
+  font-size: 18px;
   font-family: "Work Sans", sans-serif;
 `;
 
 const StyledLabel = styled.div`
   color: grey;
   padding: 5px;
+  font-size: 18px;
 `;
 
 const StyledRadioWrapper = styled.div`
@@ -102,12 +103,33 @@ const StyledRadioWrapper = styled.div`
 const StyledInput = styled.input`
   width: 20px;
   height: 20px;
+  border: 1px solid lightgrey;
+  border-radius: 50%; 
+  margin-right: 5px;
+  appearance:none;
+  -moz-appearance: none;
+  -webkit-appearance: none;    
+  position: relative;
+    &:before {
+      content: " ";
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      bottom: 2px;
+      left: 2px;
+      border-radius: 100%;
+      transition: background .15s; 
+    }
+    &:checked{
+      &:before {
+        background-color: grey; 
+      }
 `;
 
 const StyledQuestion = styled.span`
   color: lightgrey;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
 `;
 
 const StyledWrapper = styled.div`

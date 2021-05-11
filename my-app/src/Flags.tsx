@@ -27,6 +27,7 @@ const StyledDiv: any = styled.div<flagType>`
   padding: 10px 20px 0px 20px;
   color: ${({ color }) => (color >= 0 ? `grey` : `#cf3232`)};
   width: 75px;
+  font-size: 18px;
 `;
 
 const StyledFlag = styled.span`

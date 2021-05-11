@@ -16,4 +16,5 @@ const StyledDiv = styled.div`
   padding: 20px 20px 0px 0px;
   color: grey;
   width: 75px;
+  font-size: 18px;
 `;
