@@ -37,10 +37,10 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ squaresNum: 25, basis: 5 }));
+              dispatch(setNumOfSquares({ squaresNum: 64, basis: 8 }));
             }}
           />
-          Easy (5 x 5 grid)
+          Easy (8 x 8 grid)
         </StyledLabel>
         <StyledLabel>
           <StyledInput
@@ -48,10 +48,10 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ squaresNum: 64, basis: 8 }));
+              dispatch(setNumOfSquares({ squaresNum: 100, basis: 10 }));
             }}
           />
-          Medium (8 x 8 grid)
+          Medium (10 x 10 grid)
         </StyledLabel>
         <StyledLabel>
           <StyledInput
@@ -82,7 +82,7 @@ const StyledRulesButton = styled.button`
   border-radius: 10px;
   border: none;
   align-self: flex-end;
-  padding: 5px;
+  padding: 10px;
   background-color: transparent;
   margin: 10px;
   font-size: 18px;
