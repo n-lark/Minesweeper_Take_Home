@@ -1,17 +1,69 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBomb,
+  faFlag,
+  faTimes,
+  faPastafarianism,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const NotFoundError: React.FC = () => {
   return (
     <StyledWrapper>
       <StyledDiv>Oops! Something weird happened.</StyledDiv>
+      <StyledIconWrapper>
+        <StyledIcon>
+          <FontAwesomeIcon icon={faBomb} />
+        </StyledIcon>
+        <StyledIcon>
+          <FontAwesomeIcon icon={faTimes} />
+        </StyledIcon>
+        <StyledIcon>2</StyledIcon>
+        <StyledIcon>
+          <FontAwesomeIcon icon={faFlag} />
+        </StyledIcon>
+        <StyledIcon>
+          <FontAwesomeIcon icon={faPastafarianism} />
+        </StyledIcon>
+        <StyledIcon>
+          <FontAwesomeIcon icon={faBomb} />
+        </StyledIcon>
+        <StyledIcon>1</StyledIcon>
+        <StyledIcon>
+          <FontAwesomeIcon icon={faFlag} />
+        </StyledIcon>
+      </StyledIconWrapper>
       <StyledLink to="./">
         <StyledButton>Restart Game</StyledButton>
       </StyledLink>
     </StyledWrapper>
   );
 };
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const StyledIcon = styled.span`
+  display: inline-block;
+  animation: ${rotate} 3s linear infinite;
+  padding: 10px;
+  font-weight: bold;
+`;
+
+const StyledIconWrapper = styled.div`
+  margin-top: 60px;
+  font-size: 30px;
+  padding: 5px;
+`;
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -27,8 +79,8 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledDiv = styled.div`
-  font-size: 24px;
-  margin-top: 100px;
+  font-size: 30px;
+  margin: 100px 0px 50px 0px;
 `;
 
 const StyledButton = styled.button`

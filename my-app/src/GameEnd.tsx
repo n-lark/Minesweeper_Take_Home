@@ -1,21 +1,79 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBomb, faFlag, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "./app/hooks";
 import { formatTime } from "./utility/formatTime";
 
+type iconContainer = {
+  time: number;
+};
+
 export const GameEnd: React.FC = () => {
   const time = useAppSelector((state) => state.timer.value);
+  const gameIsWon = useAppSelector((state) => state.gameWon.value);
 
   return (
     <StyledWrapper>
-      <StyledDiv>Your total time was: {formatTime(time)}</StyledDiv>
+      <StyledTimeDiv>Your total time was: {formatTime(time)}</StyledTimeDiv>
+      {gameIsWon && (
+        <>
+          <StyledDiv>Congratulations, you won the game!</StyledDiv>
+          <StyledInlineWrapper>
+            <StyledIcon time={5}>
+              <FontAwesomeIcon icon={faTimes} />
+            </StyledIcon>
+            <StyledIcon time={4}>
+              <FontAwesomeIcon icon={faFlag} />
+            </StyledIcon>
+            <StyledIcon time={3}>
+              <FontAwesomeIcon icon={faBomb} />
+            </StyledIcon>
+            <StyledIcon time={4}>1</StyledIcon>
+            <StyledIcon time={3}>
+              <FontAwesomeIcon icon={faBomb} />
+            </StyledIcon>
+            <StyledIcon time={5}>
+              <FontAwesomeIcon icon={faTimes} />
+            </StyledIcon>
+            <StyledIcon time={4}>
+              <FontAwesomeIcon icon={faFlag} />
+            </StyledIcon>
+            <StyledIcon time={5}>2</StyledIcon>
+          </StyledInlineWrapper>
+        </>
+      )}
+      {!gameIsWon && (
+        <>
+          <StyledDiv>Sorry, you lost the game.</StyledDiv>
+          <StyledDiv>Better luck next time!</StyledDiv>
+        </>
+      )}
       <StyledLink to="./">
         <StyledButton>Play Again</StyledButton>
       </StyledLink>
     </StyledWrapper>
   );
 };
+
+const StyledInlineWrapper = styled.div`
+  display: inline-block;
+`;
+
+const Bombs = keyframes`
+  0% { top: -12px; }
+  100% { top: 170px; }
+`;
+
+const StyledIcon = styled.span<iconContainer>`
+  position: relative;
+  top: 0;
+  padding: 5px;
+  font-size: 22px;
+  font-weight: bold;
+  animation: ${Bombs} ${(p) => p.time}s linear infinite;
+`;
 
 const StyledButton = styled.button`
   color: gray;
@@ -38,6 +96,7 @@ const StyledWrapper = styled.div`
   width: 700px;
   height: 600px;
   font-family: "Work Sans", sans-serif;
+  color: grey;
 `;
 
 const StyledLink = styled(Link)`
@@ -46,7 +105,12 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledDiv = styled.div`
-  color: grey;
-  margin-top: 50px;
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+const StyledTimeDiv = styled.div`
+  margin: 50px;
   font-size: 24px;
 `;

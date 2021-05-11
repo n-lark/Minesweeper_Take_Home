@@ -70,7 +70,7 @@ const StyledRulesButton = styled.button`
   padding: 5px;
   background-color: transparent;
   margin: 10px;
-  font-size: 16px;
+  font-size: 18px;
   font-family: "Work Sans", sans-serif;
 `;
 
