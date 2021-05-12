@@ -14,12 +14,12 @@ import { RulesModal } from "./RulesModal";
 export const Game: React.FC = () => {
   const dispatch = useAppDispatch();
   const gameLost = useAppSelector((state) => state.gameLost.value);
-  const { squaresNum, basis } = useAppSelector(
+  const { numOfSquares, rowLength } = useAppSelector(
     (state) => state.numOfSquares.value
   );
   const modalControl = useAppSelector((state) => state.rulesModal.value);
   const gameIsWon = useAppSelector((state) => state.gameWon.value);
-  const numOfFlags = Math.floor(basis * basis * 0.15 + 1);
+  const numOfFlags = Math.floor(rowLength * rowLength * 0.15 + 1);
 
   useEffect(() => {
     const gameTimer = setInterval(() => {
@@ -36,9 +36,9 @@ export const Game: React.FC = () => {
   }, [dispatch, gameLost, gameIsWon]);
 
   useEffect(() => {
-    dispatch(generateBlankSquares({ squaresNum, basis }));
+    dispatch(generateBlankSquares({ numOfSquares, rowLength }));
     dispatch(determineFlags(numOfFlags));
-  }, [squaresNum, basis, dispatch, numOfFlags]);
+  }, [numOfSquares, rowLength, dispatch, numOfFlags]);
 
   return (
     <StyledWrapper>

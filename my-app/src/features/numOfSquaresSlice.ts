@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../app/store";
 
 type numTypeState = {
-  squaresNum: number;
-  basis: number;
+  numOfSquares: number;
+  rowLength: number;
 };
 
 type numOfSquaresInitialState = {
@@ -16,7 +16,7 @@ type actionType = {
 };
 
 const initialState: numOfSquaresInitialState = {
-  value: { squaresNum: 64, basis: 8 },
+  value: { numOfSquares: 64, rowLength: 8 },
 };
 
 export const numOfSquaresSlice = createSlice({
@@ -24,11 +24,11 @@ export const numOfSquaresSlice = createSlice({
   initialState,
   reducers: {
     setNumOfSquares: (state: numOfSquaresInitialState, action: actionType) => {
-      state.value.squaresNum = action.payload.squaresNum;
-      state.value.basis = action.payload.basis;
+      state.value.numOfSquares = action.payload.numOfSquares;
+      state.value.rowLength = action.payload.rowLength;
     },
     resetNumOfSquares: (state: numOfSquaresInitialState) => {
-      state.value = { squaresNum: 64, basis: 8 };
+      state.value = { numOfSquares: 64, rowLength: 8 };
     },
   },
 });

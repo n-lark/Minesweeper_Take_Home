@@ -16,7 +16,7 @@ export const shuffleMineLocations = (
   array: Array<Array<squareType>>,
   rowCurrent: number,
   columnCurrent: number,
-  basis: number
+  rowLength: number
 ): Array<Array<squareType>> => {
   const flatArray = array.flat(Infinity);
 
@@ -40,14 +40,19 @@ export const shuffleMineLocations = (
 
   flatArray.forEach((singleSquare) => {
     tempArray.push(singleSquare);
-    if (tempArray.length === basis) {
+    if (tempArray.length === rowLength) {
       nestedArray.push(tempArray);
       tempArray = [];
     }
   });
 
   if (nestedArray[rowCurrent][columnCurrent].mine.isMine) {
-    return shuffleMineLocations(nestedArray, rowCurrent, columnCurrent, basis);
+    return shuffleMineLocations(
+      nestedArray,
+      rowCurrent,
+      columnCurrent,
+      rowLength
+    );
   }
 
   return nestedArray;

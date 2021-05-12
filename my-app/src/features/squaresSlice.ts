@@ -23,8 +23,8 @@ const initialState = {
 } as squaresInitialState;
 
 type blankSquaresPayloadType = {
-  squaresNum: number;
-  basis: number;
+  numOfSquares: number;
+  rowLength: number;
 };
 
 type blankSquaresActionType = {
@@ -33,10 +33,10 @@ type blankSquaresActionType = {
 };
 
 type deployMinesPayloadType = {
-  squaresNum: number;
+  numOfSquares: number;
   rowCurrent: number;
   columnCurrent: number;
-  basis: number;
+  rowLength: number;
 };
 
 type deployMinesActionType = {
@@ -74,14 +74,14 @@ export const squaresSlice = createSlice({
     ) => {
       const squaresArray = [];
       let nestedArray = [];
-      for (let i = 0; i < action.payload.squaresNum; i++) {
+      for (let i = 0; i < action.payload.numOfSquares; i++) {
         nestedArray.push({
           blank: false,
           flag: false,
           number: false,
           mine: { show: false, isMine: false },
         });
-        if (nestedArray.length === action.payload.basis) {
+        if (nestedArray.length === action.payload.rowLength) {
           squaresArray.push(nestedArray);
           nestedArray = [];
         }
@@ -104,7 +104,7 @@ export const squaresSlice = createSlice({
         if (index > Math.floor(flatArray.length * 0.15)) {
           nestedArray.push(square);
         }
-        if (nestedArray.length === action.payload.basis) {
+        if (nestedArray.length === action.payload.rowLength) {
           nestedArray.push(tempArray);
           tempArray = [];
         }
@@ -115,7 +115,7 @@ export const squaresSlice = createSlice({
         nestedArray,
         action.payload.rowCurrent,
         action.payload.columnCurrent,
-        action.payload.basis
+        action.payload.rowLength
       );
 
       state.value = shuffledSquares;

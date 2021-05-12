@@ -40,13 +40,16 @@ export const Grid: React.FC = () => {
   const [firstClickCoordinates, setFirstClickCoordinates] = useState<
     Array<number>
   >([]);
+
   const squares = useAppSelector((state) => state.squares.value);
-  const { squaresNum, basis } = useAppSelector(
+  const { numOfSquares, rowLength } = useAppSelector(
     (state) => state.numOfSquares.value
   );
   const gameLost = useAppSelector((state) => state.gameLost.value);
   const gameWon = useAppSelector((state) => state.gameWon.value);
   const dispatch = useAppDispatch();
+
+  //Note for Xavyr: Should this checkedCoordinates live in useState? I think it's fine here, but wasn't sure if it's a bad practice.
   const checkedCoordinates: Array<Array<number>> = [];
 
   useEffect(() => {
@@ -100,7 +103,9 @@ export const Grid: React.FC = () => {
       return null;
     }
     if (firstClick) {
-      dispatch(deployMines({ squaresNum, basis, rowCurrent, columnCurrent }));
+      dispatch(
+        deployMines({ numOfSquares, rowLength, rowCurrent, columnCurrent })
+      );
       setFirstClickCoordinates([rowCurrent, columnCurrent]);
       setFirstClick(false);
     }
@@ -132,7 +137,7 @@ export const Grid: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <StyledGrid rowLength={basis}>
+      <StyledGrid rowLength={rowLength}>
         {squares.map((square, row) => {
           return square.map((piece, i) => {
             return (
@@ -193,7 +198,10 @@ const StyledBlankSpan = styled.span`
 
 const StyledGrid = styled.div<gridContainer>`
   display: grid;
-  grid-template-columns: repeat(${(p) => p.rowLength}, minmax(0, 30px));
+  grid-template-columns: repeat(
+    ${({ rowLength }) => rowLength},
+    minmax(0, 30px)
+  );
   border: 0.5px solid lightgray;
   > div {
     height: 30px;

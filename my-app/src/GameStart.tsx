@@ -37,7 +37,7 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ squaresNum: 64, basis: 8 }));
+              dispatch(setNumOfSquares({ numOfSquares: 64, rowLength: 8 }));
             }}
           />
           Easy (8 x 8 grid)
@@ -48,7 +48,7 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ squaresNum: 100, basis: 10 }));
+              dispatch(setNumOfSquares({ numOfSquares: 100, rowLength: 10 }));
             }}
           />
           Medium (10 x 10 grid)
@@ -60,7 +60,7 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ squaresNum: 144, basis: 12 }));
+              dispatch(setNumOfSquares({ numOfSquares: 144, rowLength: 12 }));
             }}
           />
           Hard (12 x 12 grid)

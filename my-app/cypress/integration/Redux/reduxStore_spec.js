@@ -10,7 +10,7 @@ describe("Testing redux store", () => {
         flags: { value: 0 },
         gameLost: { value: false },
         gameWon: { value: false },
-        numOfSquares: { value: { squaresNum: 64, basis: 8 } },
+        numOfSquares: { value: { numOfSquares: 64, rowLength: 8 } },
         rulesModal: { value: false },
         squares: { value: Array(0) },
         timer: { value: 0 },
@@ -28,7 +28,7 @@ describe("Testing redux store", () => {
       .its("store")
       .invoke("getState")
       .its("numOfSquares")
-      .should("deep.equal", { value: { squaresNum: 144, basis: 12 } });
+      .should("deep.equal", { value: { numOfSquares: 144, rowLength: 12 } });
   });
 
   it("Redux actions impact Redux store", () => {
@@ -36,12 +36,15 @@ describe("Testing redux store", () => {
 
     cy.window()
       .its("store")
-      .invoke("dispatch", setNumOfSquares({ squaresNum: 100, basis: 10 }));
+      .invoke(
+        "dispatch",
+        setNumOfSquares({ numOfSquares: 100, rowLength: 10 })
+      );
 
     cy.window()
       .its("store")
       .invoke("getState")
       .its("numOfSquares")
-      .should("deep.equal", { value: { squaresNum: 100, basis: 10 } });
+      .should("deep.equal", { value: { numOfSquares: 100, rowLength: 10 } });
   });
 });
