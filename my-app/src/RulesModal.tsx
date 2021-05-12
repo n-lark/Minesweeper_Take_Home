@@ -33,9 +33,9 @@ const RulesModal: React.FC = () => {
           </StyledModalRulesLi>
           <StyledModalRulesLi>
             Cells that are suspected to contain a mine can be flagged. A cell
-            can be flagged with <StyledBoldSpan>shift + click</StyledBoldSpan>,
-            and can be unflagged with{" "}
-            <StyledBoldSpan>shift + click</StyledBoldSpan>.{" "}
+            can be flagged with <StyledBoldSpan>alt + click</StyledBoldSpan>
+            (option + click for mac), and can be unflagged with{" "}
+            <StyledBoldSpan>alt + click</StyledBoldSpan>.{" "}
           </StyledModalRulesLi>
           <StyledModalRulesLi>
             The game is successfully won once all squares not containing a mine

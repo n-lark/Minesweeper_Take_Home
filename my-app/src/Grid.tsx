@@ -40,7 +40,6 @@ export const Grid: React.FC = () => {
   const [firstClickCoordinates, setFirstClickCoordinates] = useState<
     Array<number>
   >([]);
-
   const squares = useAppSelector((state) => state.squares.value);
   const { numOfSquares, rowLength } = useAppSelector(
     (state) => state.numOfSquares.value
@@ -144,7 +143,7 @@ export const Grid: React.FC = () => {
               <StyledDiv
                 key={i}
                 onClick={(e) => {
-                  if (e.shiftKey && !firstClick) {
+                  if (e.altKey && !firstClick) {
                     if (!squares[row][i].flag) {
                       dispatch(flagMine({ row, i }));
                       dispatch(decrementFlags());
@@ -154,10 +153,10 @@ export const Grid: React.FC = () => {
                       dispatch(incrementFlags());
                     }
                   }
-                  if (squares[row][i].flag && !e.shiftKey) {
+                  if (squares[row][i].flag && !e.altKey) {
                     return null;
                   }
-                  if (!e.shiftKey) {
+                  if (!e.altKey) {
                     uncoverSquare(row, i);
                   }
                 }}
