@@ -21,7 +21,7 @@ const Flags: React.FC = () => {
 
 export { Flags };
 
-//FOR SHAME USING ANY, fix this
+// need to fix any here
 
 const StyledDiv: any = styled.div<flagType>`
   align-self: flex-end;
