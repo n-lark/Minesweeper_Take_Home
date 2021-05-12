@@ -136,11 +136,12 @@ export const Grid: React.FC = () => {
 
   return (
     <StyledWrapper>
-      <StyledGrid rowLength={rowLength}>
+      <StyledGrid data-cy="grid" rowLength={rowLength}>
         {squares.map((square, row) => {
           return square.map((piece, i) => {
             return (
               <StyledDiv
+                data-cy={`row${row}column${i}`}
                 key={i}
                 onClick={(e) => {
                   if (e.altKey && !firstClick) {

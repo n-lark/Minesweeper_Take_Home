@@ -14,7 +14,7 @@ const Flags: React.FC = () => {
   return (
     <StyledDiv color={numOfFlags}>
       <FontAwesomeIcon icon={faFlag} />
-      <StyledFlag>{numOfFlags}</StyledFlag>
+      <StyledFlag data-cy="flagCount">{numOfFlags}</StyledFlag>
     </StyledDiv>
   );
 };
@@ -26,7 +26,7 @@ export { Flags };
 const StyledDiv: any = styled.div<flagType>`
   align-self: flex-end;
   padding: 10px 20px 10px 20px;
-  color: ${({ color }) => (color >= 0 ? `#595959` : `#cf3232`)};
+  color: ${({ color }) => (color > 0 ? `#595959` : `#cf3232`)};
   width: 75px;
   font-size: 18px;
 `;
