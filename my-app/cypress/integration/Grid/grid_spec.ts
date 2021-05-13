@@ -12,8 +12,8 @@ type squareState = {
   mine: mineState;
 };
 
-describe("grid behaves as expected", () => {
-  it("grid populates with correct number of squares", () => {
+describe("Grid renders squares as expected", () => {
+  it("Grid populates with correct number of squares", () => {
     cy.visit("localhost:3000");
     cy.get(`[data-cy="chose-level-hard"]`).as("levelHard").should("exist");
     cy.get("@levelHard").click();
@@ -22,7 +22,7 @@ describe("grid behaves as expected", () => {
     cy.get("@grid").children().should("have.length", 144);
   });
 
-  it("first click cannot be a mine", () => {
+  it("First click cannot be a mine", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.get(`[data-cy="row1column1"]`).as("row1Column1").should("exist");
@@ -37,7 +37,7 @@ describe("grid behaves as expected", () => {
       });
   });
 
-  it("grid renders correct amount of mines", () => {
+  it("Grid renders correct amount of mines", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.firstClick();
@@ -59,7 +59,7 @@ describe("grid behaves as expected", () => {
       });
   });
 
-  it("clicking on a mine ends the game", () => {
+  it("Clicking on a mine ends the game and exposes all mines", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.firstClick();
@@ -103,10 +103,16 @@ describe("grid behaves as expected", () => {
           }
         }
         expect(minesExposed).to.equal(10);
+
+        for (let i = 0; i < minesExposed * 2; i += 2) {
+          cy.get(
+            `[data-cy="mine${mineCoordinates[i]}${mineCoordinates[i + 1]}"]`
+          ).should("exist");
+        }
       });
   });
 
-  it("clicking on an non mine adjacent square renders a blank square", () => {
+  it("Clicking on an non mine adjacent square renders a blank square", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.firstClick();
@@ -135,12 +141,10 @@ describe("grid behaves as expected", () => {
           .as("blankLocated")
           .should("exist");
         cy.get("@blankLocated").click();
-        cy.get(
-          `[data-cy="blankSpan${blankCoordinates[0]}${blankCoordinates[1]}"]`
-        )
-          .as("blankSpan")
+        cy.get(`[data-cy="blank${blankCoordinates[0]}${blankCoordinates[1]}"]`)
+          .as("blank")
           .should("exist");
-        cy.get("@blankSpan").should(
+        cy.get("@blank").should(
           "have.css",
           "background-color",
           "rgb(240, 240, 240)"
@@ -148,7 +152,7 @@ describe("grid behaves as expected", () => {
       });
   });
 
-  it("clicking on a mine adjacent square renders a number", () => {
+  it("Clicking on a mine adjacent square renders a number", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.firstClick();

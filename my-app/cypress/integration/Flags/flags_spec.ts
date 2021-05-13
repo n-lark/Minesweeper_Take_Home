@@ -10,8 +10,8 @@ type squareState = {
   mine: mineState;
 };
 
-describe("flag count adjusts as expected", () => {
-  it("flag count decrements as expected", () => {
+describe("Flag count adjusts as expected", () => {
+  it("Flag count decrements as expected", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.firstClick();
@@ -39,7 +39,7 @@ describe("flag count adjusts as expected", () => {
         cy.get("@flagCount").should("have.text", 9);
       });
   });
-  it("flag count increments as expected", () => {
+  it("Flag count increments as expected", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.firstClick();
@@ -69,7 +69,7 @@ describe("flag count adjusts as expected", () => {
         cy.get("@flagCount").should("have.text", 10);
       });
   });
-  it("flag implementation impacts state", () => {
+  it("Flag implementation impacts flag state", () => {
     cy.visit("localhost:3000");
     cy.startGame();
     cy.firstClick();
@@ -94,7 +94,7 @@ describe("flag count adjusts as expected", () => {
           .should("exist");
         cy.get("@flagLocation").click({ altKey: true });
         cy.get(
-          `[data-cy=flag${coordinatesToFlag[0]}${coordinatesToFlag[0]}]`
+          `[data-cy=flag${coordinatesToFlag[0]}${coordinatesToFlag[1]}]`
         ).should("exist");
       });
     cy.window()
