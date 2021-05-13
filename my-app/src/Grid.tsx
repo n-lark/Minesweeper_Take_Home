@@ -167,7 +167,9 @@ export const Grid: React.FC = () => {
                   }
                 }}
               >
-                {piece.mine.show && <FontAwesomeIcon icon={faBomb} />}
+                {piece.mine.show && (
+                  <FontAwesomeIcon data-cy={`mine${row}${i}`} icon={faBomb} />
+                )}
                 {piece.mine.isMine && <StyledMineSpan />}
                 {piece.flag && (
                   <FontAwesomeIcon
@@ -181,7 +183,7 @@ export const Grid: React.FC = () => {
                 )}
                 {piece.number && !piece.flag && generateNumber(row, i, squares)}
                 {piece.blank && !piece.flag && (
-                  <StyledBlankSpan data-cy={`blankSpan${row}${i}`} />
+                  <StyledBlankSpan data-cy={`blank${row}${i}`} />
                 )}
               </StyledDiv>
             );
