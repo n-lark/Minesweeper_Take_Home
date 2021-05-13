@@ -1,34 +1,107 @@
+type mineState = {
+  show: boolean;
+  isMine: boolean;
+};
+
+type squareState = {
+  blank: boolean;
+  flag: boolean;
+  number: boolean;
+  mine: mineState;
+};
+
 describe("flag count adjusts as expected", () => {
   it("flag count decrements as expected", () => {
     cy.visit("localhost:3000");
     cy.startGame();
-    cy.get(`[data-cy="row1column1"]`).as("row1Column1").should("exist");
-    cy.get("@row1Column1").click();
-    cy.markFlags(0, 0);
-    cy.get(`[data-cy="flagCount"]`).as("flagCount").should("exist");
-    cy.get("@flagCount").should("have.text", 9);
+    cy.firstClick();
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .its("squares")
+      .its("value")
+      .then((value: Array<Array<squareState>>) => {
+        let coordinatesToFlag: Array<number> = [];
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < value[i].length; j++) {
+            if (!value[i][j].number && !value[i][j].blank) {
+              coordinatesToFlag.push(i, j);
+            }
+          }
+        }
+        cy.get(
+          `[data-cy="row${coordinatesToFlag[0]}column${coordinatesToFlag[1]}"]`
+        )
+          .as("flagLocation")
+          .should("exist");
+        cy.get("@flagLocation").click({ altKey: true });
+        cy.get(`[data-cy="flagCount"]`).as("flagCount").should("exist");
+        cy.get("@flagCount").should("have.text", 9);
+      });
   });
   it("flag count increments as expected", () => {
     cy.visit("localhost:3000");
     cy.startGame();
-    cy.get(`[data-cy="row1column1"]`).as("row1Column1").should("exist");
-    cy.get("@row1Column1").click();
-    cy.markFlags(0, 0);
-    cy.get(`[data-cy="flagCount"]`).as("flagCount").should("exist");
-    cy.get("@flagCount").should("have.text", 9);
-    cy.markFlags(0, 0);
-    cy.get("@flagCount").should("have.text", 10);
+    cy.firstClick();
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .its("squares")
+      .its("value")
+      .then((value: Array<Array<squareState>>) => {
+        let coordinatesToFlag: Array<number> = [];
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < value[i].length; j++) {
+            if (!value[i][j].number && !value[i][j].blank) {
+              coordinatesToFlag.push(i, j);
+            }
+          }
+        }
+        cy.get(
+          `[data-cy="row${coordinatesToFlag[0]}column${coordinatesToFlag[1]}"]`
+        )
+          .as("flagLocation")
+          .should("exist");
+        cy.get("@flagLocation").click({ altKey: true });
+        cy.get(`[data-cy="flagCount"]`).as("flagCount").should("exist");
+        cy.get("@flagCount").should("have.text", 9);
+        cy.get("@flagLocation").click({ altKey: true });
+        cy.get("@flagCount").should("have.text", 10);
+      });
   });
-  it("flag count color changes when flag count is less than or equal to zero", () => {
+  it("flag implementation impacts state", () => {
     cy.visit("localhost:3000");
     cy.startGame();
-    cy.get(`[data-cy="row1column1"]`).as("row1Column1").should("exist");
-    cy.get("@row1Column1").click();
-    cy.markFlags(7, 1);
-    cy.markFlags(1, 2);
-    cy.get(`[data-cy="flagCount"]`).as("flagCount").should("exist");
-    cy.get("@flagCount").should("have.css", "color", "rgb(207, 50, 50)");
-    cy.markFlags(1, 3);
-    cy.get("@flagCount").should("have.css", "color", "rgb(207, 50, 50)");
+    cy.firstClick();
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .its("squares")
+      .its("value")
+      .then((value: Array<Array<squareState>>) => {
+        let coordinatesToFlag: Array<number> = [];
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < value[i].length; j++) {
+            if (!value[i][j].number && !value[i][j].blank) {
+              coordinatesToFlag.push(i, j);
+            }
+          }
+        }
+        cy.get(
+          `[data-cy="row${coordinatesToFlag[0]}column${coordinatesToFlag[1]}"]`
+        )
+          .as("flagLocation")
+          .should("exist");
+        cy.get("@flagLocation").click({ altKey: true });
+        cy.get(
+          `[data-cy=flag${coordinatesToFlag[0]}${coordinatesToFlag[0]}]`
+        ).should("exist");
+      });
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .its("flags")
+      .its("value")
+      .should("equal", 9);
   });
 });

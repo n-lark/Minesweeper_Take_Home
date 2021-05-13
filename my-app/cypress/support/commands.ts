@@ -5,7 +5,7 @@ declare namespace Cypress {
     startGame(): Chainable<Element>;
     endGame(): Chainable<Element>;
     playAgain(): Chainable<Element>;
-    markFlags(flagsToMark: number, row: number): Chainable<Element>;
+    firstClick(): Chainable<Element>;
   }
 }
 
@@ -24,11 +24,7 @@ Cypress.Commands.add("playAgain", () => {
   cy.get("@playAgain").click();
 });
 
-Cypress.Commands.add("markFlags", (flagsToMark: number, row: number) => {
-  for (let i = 0; i <= flagsToMark; i++) {
-    cy.get(`[data-cy="row${row}column${i}"]`)
-      .as(`row${row}column${i}`)
-      .should("exist");
-    cy.get(`@row${row}column${i}`).click({ altKey: true });
-  }
+Cypress.Commands.add("firstClick", () => {
+  cy.get(`[data-cy="row1column1"]`).as("row1Column1").should("exist");
+  cy.get("@row1Column1").click();
 });
