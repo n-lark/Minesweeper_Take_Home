@@ -48,7 +48,9 @@ export const Game: React.FC = () => {
         <Timer />
       </StyledHeaderWrapper>
       {gameIsWon && <StyledGameVerdict>You won!</StyledGameVerdict>}
-      {gameLost && <StyledGameVerdict>Game Over</StyledGameVerdict>}
+      {gameLost && (
+        <StyledGameVerdict data-cy="game-over">Game Over</StyledGameVerdict>
+      )}
       <Grid />
       <StyledLink to="./GameEnd">
         <StyledButton data-cy="end-game">End Game</StyledButton>

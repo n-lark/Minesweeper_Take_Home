@@ -144,7 +144,12 @@ export const Grid: React.FC = () => {
                 data-cy={`row${row}column${i}`}
                 key={i}
                 onClick={(e) => {
-                  if (e.altKey && !firstClick) {
+                  if (
+                    e.altKey &&
+                    !firstClick &&
+                    !squares[row][i].number &&
+                    !squares[row][i].blank
+                  ) {
                     if (!squares[row][i].flag) {
                       dispatch(flagMine({ row, i }));
                       dispatch(decrementFlags());
@@ -166,6 +171,7 @@ export const Grid: React.FC = () => {
                 {piece.mine.isMine && <StyledMineSpan />}
                 {piece.flag && (
                   <FontAwesomeIcon
+                    data-cy={`flag${row}${i}`}
                     icon={
                       piece.flag && !piece.mine.isMine && gameLost
                         ? faTimes
@@ -174,7 +180,9 @@ export const Grid: React.FC = () => {
                   />
                 )}
                 {piece.number && !piece.flag && generateNumber(row, i, squares)}
-                {piece.blank && !piece.flag && <StyledBlankSpan />}
+                {piece.blank && !piece.flag && (
+                  <StyledBlankSpan data-cy={`blankSpan${row}${i}`} />
+                )}
               </StyledDiv>
             );
           });
