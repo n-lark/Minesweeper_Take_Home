@@ -94,7 +94,7 @@ export const squaresSlice = createSlice({
     ) => {
       const flatArray = state.value.flat(Infinity);
       // Note for Xavyr: I used an any, forgive me. I am not sure how to type square. It should be squareState but that didn't work. I mentioned
-      // this in my novel of typescript errors.
+      // this in my novel of typescript errors. I did go down the stackoverflow path and nothing I found was successful.
       const arrayWithMines = flatArray.map((square: any, index: number) => {
         if (index <= Math.floor(flatArray.length * 0.15)) {
           square.mine.isMine = true;

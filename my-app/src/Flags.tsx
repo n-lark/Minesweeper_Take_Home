@@ -23,7 +23,7 @@ export { Flags };
 
 // Note for Xavyr: I am confused by this TS error. Any put a bandaid on it. I used a similar pattern for my other styled components props and this one just hates me.
 // I mentioned this in my novel of typescript errors. I suspect it has something to do with color having the inferred type "never", but it won't let me type it as
-// number. I am terrible at typescript.
+// number.
 
 const StyledDiv: any = styled.div<flagType>`
   align-self: flex-end;
