@@ -10,7 +10,7 @@ type squareState = {
   mine: mineState;
 };
 
-export const isGameWon = (squares: Array<Array<squareState>>) => {
+export const isGameWon = (squares: Array<Array<squareState>>): boolean => {
   let unOpenedSquares: Array<squareState> = [];
 
   for (let i = 0; i < squares.length; i++) {

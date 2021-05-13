@@ -14,10 +14,10 @@ import {
 } from "./features/squaresSlice";
 import { incrementFlags, decrementFlags } from "./features/flagsSlice";
 import { gameIsLost } from "./features/gameLostSlice";
+import { setGameWon } from "./features/gameWonSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
 import { isGameWon } from "./utility/isGameWon";
-import { setGameWon } from "./features/gameWonSlice";
 
 type gridContainer = {
   rowLength: number;
@@ -170,7 +170,6 @@ export const Grid: React.FC = () => {
                 {piece.mine.show && (
                   <FontAwesomeIcon data-cy={`mine${row}${i}`} icon={faBomb} />
                 )}
-                {piece.mine.isMine && <StyledMineSpan />}
                 {piece.flag && (
                   <FontAwesomeIcon
                     data-cy={`flag${row}${i}`}
@@ -193,12 +192,6 @@ export const Grid: React.FC = () => {
     </StyledWrapper>
   );
 };
-
-const StyledMineSpan = styled.span`
-  background: pink;
-  width: 5px;
-  height: 5px;
-`;
 
 const StyledBlankSpan = styled.span`
   background-color: #f0f0f0;
