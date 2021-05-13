@@ -19,8 +19,8 @@ export const shuffleMineLocations = (
   rowLength: number
 ): Array<Array<squareType>> => {
   let currentIndex = flatArray.length,
-    temporaryValue,
-    randomIndex;
+    temporaryValue: squareType,
+    randomIndex: number;
 
   while (0 !== currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
@@ -31,10 +31,7 @@ export const shuffleMineLocations = (
   }
 
   let nestedArray: Array<Array<squareType>> = [];
-
-  // Note for Xavyr: This is the typescript error we looked at that I can't figure out. I mentioned
-  // this in my novel of typescript errors.
-  let tempArray: any = [];
+  let tempArray: squareType[] = [];
 
   flatArray.forEach((singleSquare) => {
     tempArray.push(singleSquare);

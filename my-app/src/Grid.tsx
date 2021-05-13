@@ -47,8 +47,6 @@ export const Grid: React.FC = () => {
   const gameLost = useAppSelector((state) => state.gameLost.value);
   const gameWon = useAppSelector((state) => state.gameWon.value);
   const dispatch = useAppDispatch();
-
-  //Note for Xavyr: Should this checkedCoordinates live in useState? I think it's fine here, but wasn't sure if it's a bad practice.
   const checkedCoordinates: Array<Array<number>> = [];
 
   useEffect(() => {
@@ -65,7 +63,7 @@ export const Grid: React.FC = () => {
     row: number,
     column: number,
     squares: Array<Array<squareState>>
-  ) => {
+  ): void => {
     const x = [-1, -1, -1, 0, 0, 1, 1, 1];
     const y = [-1, 0, 1, -1, 1, -1, 0, 1];
 
@@ -97,7 +95,10 @@ export const Grid: React.FC = () => {
     });
   };
 
-  const uncoverSquare = (rowCurrent: number, columnCurrent: number) => {
+  const uncoverSquare = (
+    rowCurrent: number,
+    columnCurrent: number
+  ): { payload: undefined; type: string } => {
     if (gameLost) {
       return null;
     }
