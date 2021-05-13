@@ -13,17 +13,14 @@ type squareType = {
 };
 
 export const shuffleMineLocations = (
-  array: Array<Array<squareType>>,
+  flatArray: Array<squareType>,
   rowCurrent: number,
   columnCurrent: number,
   rowLength: number
 ): Array<Array<squareType>> => {
-  const flatArray = array.flat(Infinity);
-
   let currentIndex = flatArray.length,
-    // type this one too
-    temporaryValue: any,
-    randomIndex: number;
+    temporaryValue,
+    randomIndex;
 
   while (0 !== currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
@@ -35,7 +32,8 @@ export const shuffleMineLocations = (
 
   let nestedArray: Array<Array<squareType>> = [];
 
-  // Need to fix any type
+  // Note for Xavyr: This is the typescript error we looked at that I can't figure out. I mentioned
+  // this in my novel of typescript errors.
   let tempArray: any = [];
 
   flatArray.forEach((singleSquare) => {
@@ -48,7 +46,7 @@ export const shuffleMineLocations = (
 
   if (nestedArray[rowCurrent][columnCurrent].mine.isMine) {
     return shuffleMineLocations(
-      nestedArray,
+      flatArray,
       rowCurrent,
       columnCurrent,
       rowLength

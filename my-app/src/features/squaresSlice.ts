@@ -93,26 +93,17 @@ export const squaresSlice = createSlice({
       action: deployMinesActionType
     ) => {
       const flatArray = state.value.flat(Infinity);
-      const nestedArray: Array<Array<squareState>> = [];
-      let tempArray: Array<squareState> = [];
-
-      flatArray.map((square: any, index) => {
+      // Note for Xavyr: I used an any, forgive me. I am not sure how to type square. It should be squareState but that didn't work. I mentioned
+      // this in my novel of typescript errors.
+      const arrayWithMines = flatArray.map((square: any, index: number) => {
         if (index <= Math.floor(flatArray.length * 0.15)) {
           square.mine.isMine = true;
-          nestedArray.push(square);
-        }
-        if (index > Math.floor(flatArray.length * 0.15)) {
-          nestedArray.push(square);
-        }
-        if (nestedArray.length === action.payload.rowLength) {
-          nestedArray.push(tempArray);
-          tempArray = [];
         }
         return square;
       });
 
       const shuffledSquares = shuffleMineLocations(
-        nestedArray,
+        arrayWithMines,
         action.payload.rowCurrent,
         action.payload.columnCurrent,
         action.payload.rowLength

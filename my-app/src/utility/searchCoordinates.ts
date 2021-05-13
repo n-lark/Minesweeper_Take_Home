@@ -1,7 +1,7 @@
 export const searchCoordinates = (
   array: Array<Array<number>>,
   coordinates: Array<number>
-) => {
+): boolean => {
   let found = false;
 
   for (let i = 0; i < array.length; i++) {

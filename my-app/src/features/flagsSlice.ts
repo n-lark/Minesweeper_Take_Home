@@ -33,12 +33,8 @@ export const flagsSlice = createSlice({
   },
 });
 
-export const {
-  incrementFlags,
-  decrementFlags,
-  resetFlags,
-  determineFlags,
-} = flagsSlice.actions;
+export const { incrementFlags, decrementFlags, resetFlags, determineFlags } =
+  flagsSlice.actions;
 
 export const selectFlags = (state: RootState) => state.flags.value;
 

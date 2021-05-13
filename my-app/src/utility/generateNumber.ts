@@ -14,7 +14,7 @@ export const generateNumber = (
   row: number,
   index: number,
   squares: Array<Array<squareType>>
-) => {
+): number => {
   let totalNum = 0;
 
   const x = [-1, -1, -1, 0, 0, 1, 1, 1];
