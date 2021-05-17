@@ -12,12 +12,12 @@ type iconContainer = {
 
 export const GameEnd: React.FC = () => {
   const time = useAppSelector((state) => state.timer.value);
-  const gameIsWon = useAppSelector((state) => state.gameWon.value);
+  const { lost, won } = useAppSelector((state) => state.gameWonOrLost.value);
 
   return (
     <StyledWrapper>
       <StyledTimeDiv>Your total time was: {formatTime(time)}</StyledTimeDiv>
-      {gameIsWon && (
+      {won && (
         <>
           <StyledDiv>Congratulations, you won the game!</StyledDiv>
           <StyledInlineWrapper>
@@ -44,7 +44,7 @@ export const GameEnd: React.FC = () => {
           </StyledInlineWrapper>
         </>
       )}
-      {!gameIsWon && (
+      {lost && (
         <>
           <StyledDiv>Sorry, you lost the game.</StyledDiv>
           <StyledDiv>Better luck next time!</StyledDiv>

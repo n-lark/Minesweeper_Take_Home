@@ -13,8 +13,7 @@ import {
   unFlagMine,
 } from "./features/squaresSlice";
 import { incrementFlags, decrementFlags } from "./features/flagsSlice";
-import { gameIsLost } from "./features/gameLostSlice";
-import { setGameWon } from "./features/gameWonSlice";
+import { gameIsLost, gameIsWon } from "./features/gameWonOrLostSlice";
 import { generateNumber } from "./utility/generateNumber";
 import { searchCoordinates } from "./utility/searchCoordinates";
 import { isGameWon } from "./utility/isGameWon";
@@ -42,22 +41,21 @@ export const Grid: React.FC = () => {
   >([]);
   const squares = useAppSelector((state) => state.squares.value);
   const { numOfSquares, rowLength } = useAppSelector(
-    (state) => state.numOfSquares.value
+    (state) => state.board.value
   );
-  const gameLost = useAppSelector((state) => state.gameLost.value);
-  const gameWon = useAppSelector((state) => state.gameWon.value);
+  const { lost, won } = useAppSelector((state) => state.gameWonOrLost.value);
   const dispatch = useAppDispatch();
   const checkedCoordinates: Array<Array<number>> = [];
 
   useEffect(() => {
-    if (gameWon) {
+    if (won) {
       return null;
     }
     if (isGameWon(squares) && !firstClick) {
-      dispatch(setGameWon());
+      dispatch(gameIsWon());
       dispatch(exposeMines());
     }
-  }, [squares, dispatch, gameWon, firstClick]);
+  }, [squares, dispatch, won, firstClick]);
 
   const expandSquares = (
     row: number,
@@ -99,7 +97,7 @@ export const Grid: React.FC = () => {
     rowCurrent: number,
     columnCurrent: number
   ): { payload: undefined; type: string } => {
-    if (gameLost) {
+    if (lost) {
       return null;
     }
     if (firstClick) {
@@ -175,12 +173,13 @@ export const Grid: React.FC = () => {
                   <FontAwesomeIcon
                     data-cy={`flag${row}${i}`}
                     icon={
-                      piece.flag && !piece.mine.isMine && gameLost
+                      piece.flag && !piece.mine.isMine && lost
                         ? faTimes
                         : faFlag
                     }
                   />
                 )}
+                {piece.mine.isMine && <StyledMineSpan />}
                 {piece.number && !piece.flag && generateNumber(row, i, squares)}
                 {piece.blank && !piece.flag && (
                   <StyledBlankSpan data-cy={`blank${row}${i}`} />
@@ -193,6 +192,12 @@ export const Grid: React.FC = () => {
     </StyledWrapper>
   );
 };
+
+const StyledMineSpan = styled.div`
+  background-color: pink;
+  height: 5px;
+  width: 5px;
+`;
 
 const StyledBlankSpan = styled.span`
   background-color: #f0f0f0;

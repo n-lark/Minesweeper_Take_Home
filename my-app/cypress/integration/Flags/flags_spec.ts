@@ -1,13 +1,13 @@
-type mineState = {
+type MineState = {
   show: boolean;
   isMine: boolean;
 };
 
-type squareState = {
+type SquareState = {
   blank: boolean;
   flag: boolean;
   number: boolean;
-  mine: mineState;
+  mine: MineState;
 };
 
 describe("Flag count adjusts as expected", () => {
@@ -20,7 +20,7 @@ describe("Flag count adjusts as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<squareState>>) => {
+      .then((value: Array<Array<SquareState>>) => {
         let coordinatesToFlag: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
@@ -48,7 +48,7 @@ describe("Flag count adjusts as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<squareState>>) => {
+      .then((value: Array<Array<SquareState>>) => {
         let coordinatesToFlag: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
@@ -78,7 +78,7 @@ describe("Flag count adjusts as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<squareState>>) => {
+      .then((value: Array<Array<SquareState>>) => {
         let coordinatesToFlag: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
