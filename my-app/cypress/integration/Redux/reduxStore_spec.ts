@@ -1,4 +1,4 @@
-import { setNumOfSquares } from "../../../src/features/numOfSquaresSlice";
+import { setBoard } from "../../../src/features/boardSlice";
 
 describe("Testing redux store", () => {
   it("Redux store has initial state on load", () => {
@@ -36,10 +36,7 @@ describe("Testing redux store", () => {
 
     cy.window()
       .its("store")
-      .invoke(
-        "dispatch",
-        setNumOfSquares({ numOfSquares: 100, rowLength: 10 })
-      );
+      .invoke("dispatch", setBoard({ numOfSquares: 100, rowLength: 10 }));
 
     cy.window()
       .its("store")

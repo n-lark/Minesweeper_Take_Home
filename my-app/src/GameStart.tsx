@@ -6,12 +6,8 @@ import { resetTimer } from "./features/timerSlice";
 import { resetSquares } from "./features/squaresSlice";
 import { resetFlags } from "./features/flagsSlice";
 import { showModal } from "./features/rulesModalSlice";
-import { resetGameWon } from "./features/gameWonSlice";
-import { resetGameLost } from "./features/gameLostSlice";
-import {
-  resetNumOfSquares,
-  setNumOfSquares,
-} from "./features/numOfSquaresSlice";
+import { resetGameWonOrLost } from "./features/gameWonOrLostSlice";
+import { resetBoard, setBoard } from "./features/boardSlice";
 import { RulesModal } from "./RulesModal";
 
 export const GameStart: React.FC = () => {
@@ -21,10 +17,9 @@ export const GameStart: React.FC = () => {
   useEffect(() => {
     dispatch(resetTimer());
     dispatch(resetSquares());
-    dispatch(resetNumOfSquares());
+    dispatch(resetBoard());
     dispatch(resetFlags());
-    dispatch(resetGameWon());
-    dispatch(resetGameLost());
+    dispatch(resetGameWonOrLost());
   }, [dispatch]);
 
   return (
@@ -37,7 +32,7 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ numOfSquares: 64, rowLength: 8 }));
+              dispatch(setBoard({ numOfSquares: 64, rowLength: 8 }));
             }}
           />
           Easy (8 x 8 grid)
@@ -48,7 +43,7 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ numOfSquares: 100, rowLength: 10 }));
+              dispatch(setBoard({ numOfSquares: 100, rowLength: 10 }));
             }}
           />
           Medium (10 x 10 grid)
@@ -60,7 +55,7 @@ export const GameStart: React.FC = () => {
             type="radio"
             name="level"
             onChange={() => {
-              dispatch(setNumOfSquares({ numOfSquares: 144, rowLength: 12 }));
+              dispatch(setBoard({ numOfSquares: 144, rowLength: 12 }));
             }}
           />
           Hard (12 x 12 grid)

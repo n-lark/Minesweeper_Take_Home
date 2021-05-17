@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../app/store";
 
-type flagsInitialState = {
+type FlagsInititalState = {
   value: number;
 };
 
-const initialState: flagsInitialState = {
+const initialState: FlagsInititalState = {
   value: 0,
 };
 
-type actionType = {
+type PayloadFlagType = {
   payload: number;
   type: string;
 };
@@ -18,16 +18,16 @@ export const flagsSlice = createSlice({
   name: "flags",
   initialState,
   reducers: {
-    incrementFlags: (state: flagsInitialState) => {
+    incrementFlags: (state: FlagsInititalState) => {
       state.value += 1;
     },
-    decrementFlags: (state: flagsInitialState) => {
+    decrementFlags: (state: FlagsInititalState) => {
       state.value -= 1;
     },
-    determineFlags: (state: flagsInitialState, action: actionType) => {
+    determineFlags: (state: FlagsInititalState, action: PayloadFlagType) => {
       state.value = action.payload;
     },
-    resetFlags: (state: flagsInitialState) => {
+    resetFlags: (state: FlagsInititalState) => {
       state.value = 0;
     },
   },

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../app/store";
 
-type rulesInitialState = {
+type RulesInitialState = {
   value: boolean;
 };
 
-const initialState: rulesInitialState = {
+const initialState: RulesInitialState = {
   value: false,
 };
 
@@ -13,10 +13,10 @@ export const rulesModalSlice = createSlice({
   name: "rulesModal",
   initialState,
   reducers: {
-    showModal: (state: rulesInitialState) => {
+    showModal: (state: RulesInitialState) => {
       state.value = true;
     },
-    closeModal: (state: rulesInitialState) => {
+    closeModal: (state: RulesInitialState) => {
       state.value = false;
     },
   },
