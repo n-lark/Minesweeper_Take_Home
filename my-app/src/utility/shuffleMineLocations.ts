@@ -1,25 +1,20 @@
 //Fisher-Yates (aka Knuth) Shuffle.
 
-type mineType = {
-  show: boolean;
-  isMine: boolean;
-};
-
-type squareType = {
+type SquareType = {
   blank: boolean;
   flag: boolean;
-  mine: mineType;
+  mine: { show: boolean; isMine: boolean };
   number: boolean;
 };
 
 export const shuffleMineLocations = (
-  flatArray: Array<squareType>,
+  flatArray: Array<SquareType>,
   rowCurrent: number,
   columnCurrent: number,
   rowLength: number
-): Array<Array<squareType>> => {
+): Array<Array<SquareType>> => {
   let currentIndex = flatArray.length,
-    temporaryValue: squareType,
+    temporaryValue: SquareType,
     randomIndex: number;
 
   while (0 !== currentIndex) {
@@ -30,8 +25,8 @@ export const shuffleMineLocations = (
     flatArray[randomIndex] = temporaryValue;
   }
 
-  let nestedArray: Array<Array<squareType>> = [];
-  let tempArray: squareType[] = [];
+  let nestedArray: Array<Array<SquareType>> = [];
+  let tempArray: SquareType[] = [];
 
   flatArray.forEach((singleSquare) => {
     tempArray.push(singleSquare);

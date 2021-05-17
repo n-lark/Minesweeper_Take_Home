@@ -1,4 +1,4 @@
-export const searchCoordinates = (
+export const isCoordinateFound = (
   array: Array<Array<number>>,
   coordinates: Array<number>
 ): boolean => {
