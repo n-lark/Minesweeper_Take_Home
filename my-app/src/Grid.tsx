@@ -18,20 +18,15 @@ import { generateNumber } from "./utility/generateNumber";
 import { isCoordinateFound } from "./utility/isCoordinateFound";
 import { isGameWon } from "./utility/isGameWon";
 
-type gridContainer = {
+type GridType = {
   rowLength: number;
 };
 
-type mineState = {
-  show: boolean;
-  isMine: boolean;
-};
-
-type squareState = {
+type SquareType = {
   blank: boolean;
   flag: boolean;
   number: boolean;
-  mine: mineState;
+  mine: { show: boolean; isMine: boolean };
 };
 
 export const Grid: React.FC = () => {
@@ -60,7 +55,7 @@ export const Grid: React.FC = () => {
   const expandSquares = (
     row: number,
     column: number,
-    squares: Array<Array<squareState>>
+    squares: Array<Array<SquareType>>
   ): void => {
     const x = [-1, -1, -1, 0, 0, 1, 1, 1];
     const y = [-1, 0, 1, -1, 1, -1, 0, 1];
@@ -143,12 +138,12 @@ export const Grid: React.FC = () => {
                 data-cy={`row${row}column${i}`}
                 key={i}
                 onClick={(e) => {
-                  if (
+                  const isFlaggable =
                     e.altKey &&
                     !firstClick &&
                     !squares[row][i].number &&
-                    !squares[row][i].blank
-                  ) {
+                    !squares[row][i].blank;
+                  if (isFlaggable) {
                     if (!squares[row][i].flag) {
                       dispatch(flagMine({ row, i }));
                       dispatch(decrementFlags());
@@ -205,7 +200,7 @@ const StyledBlankSpan = styled.span`
   height: 30px;
 `;
 
-const StyledGrid = styled.div<gridContainer>`
+const StyledGrid = styled.div<GridType>`
   display: grid;
   grid-template-columns: repeat(
     ${({ rowLength }) => rowLength},

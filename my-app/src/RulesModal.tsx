@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "./app/hooks";
 import styled from "styled-components";
 import { closeModal } from "./features/rulesModalSlice";
 
-type modalType = {
+type ModalType = {
   show: boolean;
 };
 
@@ -49,7 +49,7 @@ const RulesModal: React.FC = () => {
 
 export { RulesModal };
 
-const StyledModal = styled.div<modalType>`
+const StyledModal = styled.div<ModalType>`
   z-index: 2;
   display: ${({ show }) => (show ? "block" : "none")};
   position: fixed;

@@ -55,7 +55,7 @@ export const Game: React.FC = () => {
         <StyledButton data-cy="end-game">End Game</StyledButton>
       </StyledLink>
       <StyledRulesButton
-        data-cy="rulesModalAtGame"
+        data-cy="rules-modal-at-game"
         onClick={() => dispatch(showModal())}
       >
         How to play

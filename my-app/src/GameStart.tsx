@@ -66,7 +66,7 @@ export const GameStart: React.FC = () => {
       </StyledLink>
       {modalControl && <RulesModal />}
       <StyledRulesButton
-        data-cy="rulesModal"
+        data-cy="rules-modal"
         onClick={() => dispatch(showModal())}
       >
         How to play

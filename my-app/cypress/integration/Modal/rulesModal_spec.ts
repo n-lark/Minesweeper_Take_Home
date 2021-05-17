@@ -2,7 +2,7 @@ describe("Modal behaves as expected with user interaction", () => {
   it("Modal opens and closes with user interaction at GameStart", () => {
     cy.visit("localhost:3000");
 
-    cy.get(`[data-cy="rulesModal"]`).as("rulesModal").should("exist");
+    cy.get(`[data-cy="rules-modal"]`).as("rulesModal").should("exist");
     cy.get("@rulesModal").click();
 
     cy.get(`[data-cy="modal-content"]`).as("modalText").should("exist");
@@ -18,7 +18,7 @@ describe("Modal behaves as expected with user interaction", () => {
     cy.visit("localhost:3000");
     cy.startGame();
 
-    cy.get(`[data-cy="rulesModalAtGame"]`)
+    cy.get(`[data-cy="rules-modal-at-game"]`)
       .as("rulesModalAtGame")
       .should("exist");
     cy.get("@rulesModalAtGame").click();

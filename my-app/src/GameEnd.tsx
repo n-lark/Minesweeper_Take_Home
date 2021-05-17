@@ -6,7 +6,7 @@ import { faBomb, faFlag, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "./app/hooks";
 import { formatTime } from "./utility/formatTime";
 
-type iconContainer = {
+type IconType = {
   time: number;
 };
 
@@ -66,7 +66,7 @@ const Bombs = keyframes`
   100% { top: 170px; }
 `;
 
-const StyledIcon = styled.span<iconContainer>`
+const StyledIcon = styled.span<IconType>`
   position: relative;
   top: 0;
   padding: 5px;
