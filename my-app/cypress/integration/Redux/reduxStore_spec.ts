@@ -8,9 +8,8 @@ describe("Testing redux store", () => {
       .invoke("getState")
       .should("deep.equal", {
         flags: { value: 0 },
-        gameLost: { value: false },
-        gameWon: { value: false },
-        numOfSquares: { value: { numOfSquares: 64, rowLength: 8 } },
+        gameWonOrLost: { value: { lost: false, won: false } },
+        board: { value: { numOfSquares: 64, rowLength: 8 } },
         rulesModal: { value: false },
         squares: { value: Array(0) },
         timer: { value: 0 },
@@ -27,7 +26,7 @@ describe("Testing redux store", () => {
     cy.window()
       .its("store")
       .invoke("getState")
-      .its("numOfSquares")
+      .its("board")
       .should("deep.equal", { value: { numOfSquares: 144, rowLength: 12 } });
   });
 
@@ -41,7 +40,7 @@ describe("Testing redux store", () => {
     cy.window()
       .its("store")
       .invoke("getState")
-      .its("numOfSquares")
+      .its("board")
       .should("deep.equal", { value: { numOfSquares: 100, rowLength: 10 } });
   });
 });

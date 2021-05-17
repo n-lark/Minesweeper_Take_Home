@@ -14,7 +14,7 @@ const Flags: React.FC = () => {
   return (
     <StyledDiv numFlags={numOfFlags}>
       <FontAwesomeIcon icon={faFlag} />
-      <StyledFlag data-cy="flagCount">{numOfFlags}</StyledFlag>
+      <StyledFlag data-cy="flag-count">{numOfFlags}</StyledFlag>
     </StyledDiv>
   );
 };
