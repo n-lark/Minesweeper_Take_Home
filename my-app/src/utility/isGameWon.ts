@@ -1,17 +1,12 @@
-type mineState = {
-  show: boolean;
-  isMine: boolean;
-};
-
-type squareState = {
+type SquareType = {
   blank: boolean;
   flag: boolean;
   number: boolean;
-  mine: mineState;
+  mine: { show: boolean; isMine: boolean };
 };
 
-export const isGameWon = (squares: Array<Array<squareState>>): boolean => {
-  let unOpenedSquares: Array<squareState> = [];
+export const isGameWon = (squares: Array<Array<SquareType>>): boolean => {
+  let unOpenedSquares: Array<SquareType> = [];
 
   for (let i = 0; i < squares.length; i++) {
     for (let j = 0; j < squares[i].length; j++) {

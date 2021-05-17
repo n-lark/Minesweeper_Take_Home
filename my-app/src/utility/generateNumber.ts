@@ -1,19 +1,14 @@
-type mineType = {
-  show: boolean;
-  isMine: boolean;
-};
-
-type squareType = {
+type SquareType = {
   blank: boolean;
   flag: boolean;
   number: boolean;
-  mine: mineType;
+  mine: { show: boolean; isMine: boolean };
 };
 
 export const generateNumber = (
   row: number,
   index: number,
-  squares: Array<Array<squareType>>
+  squares: Array<Array<SquareType>>
 ): number => {
   let totalNum = 0;
 

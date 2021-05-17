@@ -15,7 +15,7 @@ import {
 import { incrementFlags, decrementFlags } from "./features/flagsSlice";
 import { gameIsLost, gameIsWon } from "./features/gameWonOrLostSlice";
 import { generateNumber } from "./utility/generateNumber";
-import { searchCoordinates } from "./utility/searchCoordinates";
+import { isCoordinateFound } from "./utility/isCoordinateFound";
 import { isGameWon } from "./utility/isGameWon";
 
 type gridContainer = {
@@ -76,7 +76,7 @@ export const Grid: React.FC = () => {
       ) {
         if (
           generateNumber(rowCurrent, columnCurrent, squares) === 0 &&
-          !searchCoordinates(checkedCoordinates, [rowCurrent, columnCurrent]) &&
+          !isCoordinateFound(checkedCoordinates, [rowCurrent, columnCurrent]) &&
           !squares[rowCurrent][columnCurrent].flag
         ) {
           dispatch(markBlank({ rowCurrent, columnCurrent }));
