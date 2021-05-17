@@ -4,15 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "./app/hooks";
 
-type flagType = {
-  color: number;
+type FlagType = {
+  numFlags: number;
 };
 
 const Flags: React.FC = () => {
   const numOfFlags = useAppSelector((state) => state.flags.value);
 
   return (
-    <StyledDiv color={numOfFlags}>
+    <StyledDiv numFlags={numOfFlags}>
       <FontAwesomeIcon icon={faFlag} />
       <StyledFlag data-cy="flagCount">{numOfFlags}</StyledFlag>
     </StyledDiv>
@@ -21,14 +21,10 @@ const Flags: React.FC = () => {
 
 export { Flags };
 
-// Note for Xavyr: I am confused by this TS error. Any put a bandaid on it. I used a similar pattern for my other styled components props and this one just hates me.
-// I mentioned this in my novel of typescript errors. I suspect it has something to do with color having the inferred type "never", but it won't let me type it as
-// number.
-
-const StyledDiv: any = styled.div<flagType>`
+const StyledDiv = styled.div<FlagType>`
   align-self: flex-end;
   padding: 10px 20px 10px 20px;
-  color: ${({ color }) => (color > 0 ? `#595959` : `#cf3232`)};
+  color: ${({ numFlags }) => (numFlags > 0 ? `#595959` : `#cf3232`)};
   width: 75px;
   font-size: 18px;
 `;

@@ -9,7 +9,7 @@ import {
   faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 
-type IconContainer = {
+type IconType = {
   time: number;
 };
 
@@ -58,7 +58,7 @@ const rotate = keyframes`
   }
 `;
 
-const StyledIcon = styled.span<IconContainer>`
+const StyledIcon = styled.span<IconType>`
   display: inline-block;
   animation: ${rotate} ${({ time }) => time}s linear infinite;
   padding: 10px;
