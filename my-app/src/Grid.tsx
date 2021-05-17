@@ -174,7 +174,6 @@ export const Grid: React.FC = () => {
                     }
                   />
                 )}
-                {piece.mine.isMine && <StyledMineSpan />}
                 {piece.number && !piece.flag && generateNumber(row, i, squares)}
                 {piece.blank && !piece.flag && (
                   <StyledBlankSpan data-cy={`blank${row}${i}`} />
@@ -187,12 +186,6 @@ export const Grid: React.FC = () => {
     </StyledWrapper>
   );
 };
-
-const StyledMineSpan = styled.div`
-  background-color: pink;
-  height: 5px;
-  width: 5px;
-`;
 
 const StyledBlankSpan = styled.span`
   background-color: #f0f0f0;

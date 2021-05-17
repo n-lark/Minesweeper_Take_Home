@@ -1,15 +1,10 @@
 import { generateNumber } from "../../../src/utility/generateNumber";
 
-type MineState = {
-  show: boolean;
-  isMine: boolean;
-};
-
-type SquareState = {
+type SquareType = {
   blank: boolean;
   flag: boolean;
   number: boolean;
-  mine: MineState;
+  mine: { show: boolean; isMine: boolean };
 };
 
 describe("Grid renders squares as expected", () => {
@@ -32,7 +27,7 @@ describe("Grid renders squares as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         expect(value[1][1].mine.isMine).to.equal(false);
       });
   });
@@ -46,7 +41,7 @@ describe("Grid renders squares as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let mineCount: number = 0;
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
@@ -68,7 +63,7 @@ describe("Grid renders squares as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let mineCoordinates: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
@@ -91,7 +86,7 @@ describe("Grid renders squares as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let minesExposed: number = 0;
         let mineCoordinates: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
@@ -121,7 +116,7 @@ describe("Grid renders squares as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let blankCoordinates: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
@@ -161,7 +156,7 @@ describe("Grid renders squares as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let numberCoordinates: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {

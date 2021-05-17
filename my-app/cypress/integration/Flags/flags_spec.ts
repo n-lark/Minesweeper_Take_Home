@@ -1,13 +1,8 @@
-type MineState = {
-  show: boolean;
-  isMine: boolean;
-};
-
-type SquareState = {
+type SquareType = {
   blank: boolean;
   flag: boolean;
   number: boolean;
-  mine: MineState;
+  mine: { show: boolean; isMine: boolean };
 };
 
 describe("Flag count adjusts as expected", () => {
@@ -20,7 +15,7 @@ describe("Flag count adjusts as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let coordinatesToFlag: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
@@ -35,7 +30,7 @@ describe("Flag count adjusts as expected", () => {
           .as("flagLocation")
           .should("exist");
         cy.get("@flagLocation").click({ altKey: true });
-        cy.get(`[data-cy="flagCount"]`).as("flagCount").should("exist");
+        cy.get(`[data-cy="flag-count"]`).as("flagCount").should("exist");
         cy.get("@flagCount").should("have.text", 9);
       });
   });
@@ -48,7 +43,7 @@ describe("Flag count adjusts as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let coordinatesToFlag: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
@@ -63,7 +58,7 @@ describe("Flag count adjusts as expected", () => {
           .as("flagLocation")
           .should("exist");
         cy.get("@flagLocation").click({ altKey: true });
-        cy.get(`[data-cy="flagCount"]`).as("flagCount").should("exist");
+        cy.get(`[data-cy="flag-count"]`).as("flagCount").should("exist");
         cy.get("@flagCount").should("have.text", 9);
         cy.get("@flagLocation").click({ altKey: true });
         cy.get("@flagCount").should("have.text", 10);
@@ -78,7 +73,7 @@ describe("Flag count adjusts as expected", () => {
       .invoke("getState")
       .its("squares")
       .its("value")
-      .then((value: Array<Array<SquareState>>) => {
+      .then((value: Array<Array<SquareType>>) => {
         let coordinatesToFlag: Array<number> = [];
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < value[i].length; j++) {
