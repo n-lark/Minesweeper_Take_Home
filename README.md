@@ -4,7 +4,7 @@ Minesweeper take home built for #######. Classic minesweeper game with a modern 
 
 ## Installation
 
-Download the app: <br>
+Clone the app: <br>
 
 ```
 git clone https://github.com/n-lark/Minesweeper_Take_Home.git
