@@ -4,6 +4,26 @@ Minesweeper take home built for #######. Classic minesweeper game with a modern 
 
 ## Installation
 
-Download the app: `git clone https://github.com/n-lark/Minesweeper_Take_Home.git` <br>
-Open the app in the browser: `cd my-app` then `npm start` <br>
-Run cypress tests: `npm run test`
+Download the app: <br>
+
+```
+git clone https://github.com/n-lark/Minesweeper_Take_Home.git
+```
+
+<br>
+
+Run the app in the browser:
+
+```
+cd my-app
+<br>
+npm start
+```
+
+<br>
+
+Run cypress tests:
+
+```
+npm run test
+```
